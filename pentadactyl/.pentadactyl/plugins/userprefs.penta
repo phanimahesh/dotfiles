@@ -1,0 +1,53 @@
+" Set User preferences for firefox
+" vim: ft=vim et sw=2 fdm=marker:
+
+set titlestring="Firefox ❤ Vim, for JPM"
+
+" Number of times Devtools console or scratchpad are used.
+" If this is less than 5, pasting code into console is disabled.
+set! devtools.selfxss.count=5
+
+
+" === Search
+" Use duckduckgo as default search engine in pentadactyl.
+set defsearch=duckduckgo
+
+" Though I don't use UI much, this fixes contextmenu.
+set! browser.search.defaultenginename=DuckDuckGo
+
+" Restore sessions
+" 0: blank, 1: Home, 2: Last visited page, 3: Session restore
+set! browser.startup.page=3
+
+" Store all back and forward entries for sessionrestore
+set! browser.sessionstore.max_serialize_back=-1
+set! browser.sessionstore.max_serialize_forward=-1
+
+" Use dark theme
+set! devtools.theme=dark
+
+" Enable timestamps in DevTools
+set! devtools.webconsole.timestampMessages=true
+
+" Show gcli by default
+set! devtools.toolbar.visible=true
+
+" Show me help in gcli
+" 1: never, 2: Sometimes, 3: Always
+" set! devtools.gcli.eagerHelper=3
+" This can be annoying
+
+" Enable and force OCSP
+set! security.OCSP.enabled=1
+set! security.OCSP.require=false
+
+" Flash must be click to activate
+" 1: Ask to activate, 2: Always activate, 3: Never activate
+set! plugin.state.flash=1
+
+" Set fancy about info. Works on Ubuntu and Linux in general. Not on OSX.
+set! distribution.about="Mozilla Firefox for J Phani Mahesh"
+
+" Set alternate location for black and whitelists for silentblock
+set! extensions.silentblock.altdir="~/.pentadactyl"
+set! extensions.silentblock.logging.enabled=true

@@ -1,0 +1,309 @@
+#!/bin/bash
+#---------------------------------------------------------------------
+# Script to eject LVM/LUKS governed physical sata disk
+#
+#   - One volume group
+#   - One physical disk
+#
+#---------------------------------------------------------------------
+#
+# Copyright (C) 2011 Jari Laamanen
+#
+# Author: Jari Laamanen <yartsa@clovermail.net>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#---------------------------------------------------------------------
+
+set -e 
+script_name=${0##*/}
+script_version="0.1.2"
+
+# defaults
+unmount=n
+luksclose=n
+simulate=n
+shutdown=n
+verbose=n
+version=n
+vgnotavailable=n
+keeppvs=n
+nospindown=n
+warning=n
+
+# hardcoded command locations
+vgs_cmd="/sbin/vgs"
+pvscan_cmd="/sbin/pvscan"
+dmsetup_cmd="/sbin/dmsetup"
+cryptsetup_cmd="/sbin/cryptsetup"
+umount_cmd="/bin/umount"
+vgchange_cmd="/sbin/vgchange"
+sh_cmd="/bin/sh -c"
+hdparm_cmd="/sbin/hdparm"
+
+
+function die ( ) {
+   echo $@
+   exit 1
+}
+
+usage()
+{
+cat <<EOT
+Description: Eject a SATA-disc containing mounted LVM/LUKS managed partitions
+
+Usage: $script_name [options] <volumegroup>
+
+Options:
+
+ -u    Unmount the filesystems in LV
+ -k    keep physical volumes mounted, unmount only LVs
+ -l    Lock the encrypted partitions in LV (unmount them first)
+ -s    Simulate what would be done
+ -d    Delete device from kernel (shuts/spins it down) [default]
+ -n    Don't spin the device down (no hdparm)
+ -v    Show some feedback
+ -V    Show version
+ -h    Show this help
+
+EOT
+}
+
+while getopts "uklsdnvVh" OPTION
+do
+     case $OPTION in
+	 u) unmount=y ;;
+	 k) keeppvs=y ;;
+	 l) luksclose=y ;;
+	 s) simulate=y ;;
+	 d) shutdown=y ;;
+	 n) nospindown=y ;;
+	 v) verbose=y ;;
+	 V) echo $script_name $script_version ; exit 0 ;;
+	 h) usage ; exit 0 ;;
+         ?) usage ; exit 1 ;;
+     esac
+done
+shift $(( $OPTIND - 1 ))
+LVG="$1"
+
+if [ $shutdown != y -a $luksclose != y ]
+then
+    # Default, if the other action options not specified (-u,-l)
+    shutdown=y
+fi
+
+if [ $shutdown = y ]
+then
+    unmount=y
+    luksclose=y
+fi
+
+if [ -z "$LVG" ]
+then
+    echo "Specify the target volume group!"
+    [ "$verbose" = y ] &&  echo Available: ; $vgs_cmd
+    exit 1
+fi
+
+# # #
+# Find the physical devices where VG resides (sda, sdb...)
+#
+PVDEV=$(${pvscan_cmd} | awk -v lvol="${LVG}" 'BEGIN { FS = "/| " } ; $0 ~ lvol { print $6 }' | sed  's/\([a-z]\).$/\1/' | uniq)
+
+[ -n "${PVDEV}" ] || die "No physical volumes for $LVG found. Exit."
+[ "$verbose" = y ] && echo Found physical volumes: ${PVDEV}
+
+# NOTE: if PVDEV contains /dev/dm-[[:digit:]]* it means that LVM is on top of the dm-crypt device
+# # (See TODO)
+
+# This warning may not be needed, since the situation seems to be handled well in any case
+if [[ "${PVDEV}" =~ [[:alnum:]][[:space:]] ]]
+then
+    PVDEV="$(echo "$PVDEV" | sed -e :a -e 'N;s/\n/|/;ba')"
+    if [ "$warning" = y ]
+    then
+	read -p "WARNING!! $LVG spans several devices (${PVDEV}). Continue anyway? [y/N]? "
+	if [ "$REPLY" != "y" ]
+	then
+	    die "Aborted"
+	fi
+    fi
+fi
+
+# # #
+# From the list of all encrypted devices (xxx, yyy, ...), find those
+# sitting on the VG
+#
+for CRDEV in $(${dmsetup_cmd} status | awk '$4 ~ /crypt/ { print $1 }'|sed 's/.$//')
+do 
+    [ "$verbose" = y ] && echo -n "Checking if encrypted /dev/mapper/${CRDEV} is on ${LVG}"
+    if [ -n "$(${cryptsetup_cmd} status /dev/mapper/${CRDEV} | awk -v laite="${LVG}" '($1 ~ /device/ && $2 ~ laite ) { print $2 }')" ]
+    then
+	CRYPT_DEVS_ON_LVG+="/dev/mapper/${CRDEV}|"
+	[ "$verbose" = y ] && echo ... yes
+    else
+	[ "$verbose" = y ] && echo ... no
+    fi
+# ... and those on a physical partition. 
+    [ "$verbose" = y ] && echo -n "Checking if encrypted /dev/mapper/${CRDEV} is on ${PVDEV}"
+    if [ -n "$(${cryptsetup_cmd} status /dev/mapper/${CRDEV} | awk -v laite="${PVDEV}" '($1 ~ /device/ && $2 ~ laite ) { print $2 }')" ]
+    then
+	CRYPT_DEVS_ON_PVDEV+="/dev/mapper/${CRDEV}|"
+	[ "$verbose" = y ] && echo ... yes
+    else
+	[ "$verbose" = y ] && echo ... no
+    fi
+done
+
+# Remove the last "|"
+CRYPT_DEVS_ON_LVG="$(echo "$CRYPT_DEVS_ON_LVG" |sed 's/|$//')"
+CRYPT_DEVS_ON_PVDEV="$(echo "$CRYPT_DEVS_ON_PVDEV" |sed 's/|$//')"
+
+#if [ -z "$CRYPT_DEVS_ON_LVG" -a  "$luksclose" = y -a "$unmount" != y ]
+if [ -z "$CRYPT_DEVS_ON_LVG" -a  "$luksclose" = y ]
+then
+    [ "$verbose" = y ] && echo "No unlocked devices found on $LVG"
+else
+    [ "$verbose" = y ] && echo "Found open crypt device on $LVG: $CRYPT_DEVS_ON_LVG"
+fi
+
+#if [ -z "$CRYPT_DEVS_ON_PVDEV" -a  "$luksclose" = y -a "$unmount" != y ]
+if [ -z "$CRYPT_DEVS_ON_PVDEV" -a  "$luksclose" = y ]
+then
+    [ "$verbose" = y ] && echo "No unlocked devices found on $PVDEV"
+else
+    [ "$verbose" = y ] && echo "Found open crypt device on physical partition: $CRYPT_DEVS_ON_PVDEV"
+fi
+
+
+#ALL_PVS="${PVDEV}|${LVG}"
+ALL_PVS="${LVG}"
+
+if [ -n "${CRYPT_DEVS_ON_LVG}" ]
+then
+    ALL_PVS+="|${CRYPT_DEVS_ON_LVG}"
+fi
+if [ -n "${CRYPT_DEVS_ON_PVDEV}" ]
+then
+    ALL_PVS+="|${CRYPT_DEVS_ON_PVDEV}"
+fi
+
+CRYPT_DEVS_ON_LVG=$(echo "$CRYPT_DEVS_ON_LVG" |sed 's/|/ /')
+CRYPT_DEVS_ON_PVDEV=$(echo "$CRYPT_DEVS_ON_PVDEV" |sed 's/|/ /')
+
+## Unless the physical devises are to be kept mounted, add them to the list
+if [ "$keeppvs" != y ]
+then
+    ALL_PVS+="|${PVDEV}"
+fi
+
+# here only unmount and lock crypted devices who are on top of LVM
+[ "$luksclose" = y -a "$unmount" != y -a  -n "${CRYPT_DEVS_ON_LVG}" ] &&  ALL_PVS="${CRYPT_DEVS_ON_LVG}"
+#otherwise ALL_PVS include all crypted and not crypted devices
+#
+
+# Get a list of mounted devices, both physical and LVM, modulo ALL_PVS
+#
+MOUNTED_DEVS=$(awk -v devi="${ALL_PVS}" '$1 ~ devi { print $1 }' /proc/mounts)
+
+[ -z "${MOUNTED_DEVS}" -a "$unmount" = y -a "$shutdown" != y ] && die "No mounted filesystems on $LVG"
+
+
+## Start ACTION ##
+#
+# Unmount
+[ $simulate = y ] && umount_cmd="echo Would: ${umount_cmd}"
+if [ "$unmount" = y -o "$luksclose" = y ]
+then
+    for DEVS in ${MOUNTED_DEVS}
+    do
+	${umount_cmd} "${DEVS}" || die "umount failed for ${DEVS}. Exit!"
+	[ "$verbose" = y -a "$simulate" != y ] && echo "Unounted ${DEVS}"
+    done
+fi
+
+# # 
+# Lock encrypted devices that sit on top of LVM
+#
+[ "$simulate" = y ] && cryptsetup_cmd="echo Would: ${cryptsetup_cmd}"
+if [ "$luksclose" ]
+then
+    for CRYPTED in $CRYPT_DEVS_ON_LVG
+    do
+	if [ -h "${CRYPTED}" ] 
+	then
+	    ${cryptsetup_cmd} luksClose ${CRYPTED} || exit 1
+	    [ "$verbose" = y -a "$simulate" != y ] && echo Closed LUKS mapping on ${CRYPTED}
+	else
+	    echo "${CRYPTED} not encrypted"
+	fi
+    done
+fi
+
+# Filesystems are now in unmounted state and the top-LVM crypt devices
+# locked.  Remove VG from the kernel
+#
+if [ "$luksclose" = y -a "$unmount" = y ]
+then
+    [ "$simulate" = y ] && vgchange_cmd="echo Would: ${vgchange_cmd}"
+    ${vgchange_cmd} -a n ${LVG} && vgnotavailable=y || exit 1
+fi
+
+# Now the other crypted partitions can be locked
+#
+[ "$simulate" = y ] && cryptsetup_cmd="echo Would: ${cryptsetup_cmd}"
+if [ "$vgnotavailable" = y ]
+then
+    for CRYPTED2 in $CRYPT_DEVS_ON_PVDEV
+    do
+	if [ -h "${CRYPTED2}" ] 
+	then
+	    ${cryptsetup_cmd} luksClose ${CRYPTED2} || exit 1
+	    [ "$verbose" = y -a "$simulate" != y ] && echo Closed LUKS mapping on ${CRYPTED2}
+	else
+	    echo "${CRYPTED2} not encrypted"
+	fi
+    done
+fi
+
+# #
+# Shut down the discs
+#
+[ "$simulate" = y ] && sh_cmd="echo Would: "
+[ "$simulate" = y ] && hdparm_cmd="echo Would: ${hdparm_cmd}"
+# TODO: check if some devs can be spun down despite the keeppvs
+if [ "$shutdown" = y -a "$keeppvs" != y ]
+then
+    PVDEV="$(echo "$PVDEV" | sed 's/|/ /g')"
+    for sdx in ${PVDEV}
+    do
+        # spin down manually since some drives don't do it automatically 
+	[ "$nospindown" = y ] || ${hdparm_cmd} -Y /dev/${sdx}
+	if  [ -w "/sys/block/${sdx}/device/delete" ]
+	then
+	    ${sh_cmd} "echo 1 > /sys/block/${sdx}/device/delete " || die "error ejecting ${sdx}"
+	else
+	    # propably was just a dm-N device, which was removed while
+	    # closing the encrypted partition. This happens eg. when a
+	    # PV is on top of a device mapper managed block device,
+	    # such as an encrypted disk
+	    [[ "${sdx}" =~ dm ]] || echo "${sdx} was not removable"
+	fi
+    done
+    [ "$simulate" = y ] || sleep 2
+    [ "$simulate" = y ] || dmesg | tail -8 | awk '$0 ~ /Stopping disk|disabled/ { print $3" "$4" "$5" "$6" "$7 }'
+    [ "$simulate" = y ] || echo done
+else
+    [ "$verbose" = y ] && echo Did not shut down ${PVDEV}
+fi

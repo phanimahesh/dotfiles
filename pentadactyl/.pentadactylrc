@@ -1,0 +1,143 @@
+"1.2pre
+
+loadplugins '\.(js|penta)$'
+group user
+
+" Ignore case in search unless pattern has uppercase chars
+set findcase=smart
+" Show pattern matches as you type
+set incfind
+" Highlight previous search pattern matches
+set hlfind
+
+" Faster Scrolling
+map -b j 8j
+map -b k 8k
+map -b h 8h
+map -b l 8l
+
+" map ,b to bookmark in delicious.
+" bml-delicious is set as keyword for delicious bookmarklet.
+nmap -builtin ,b :open bml-delicious<CR>
+
+
+" Toogle click-to-play
+command toggle-click-to-play -js <<EOF
+        if(Services.prefs.getBoolPref("plugins.click_to_play"))
+            Services.prefs.setBoolPref("plugins.click_to_play", false);
+        else
+            Services.prefs.setBoolPref("plugins.click_to_play", true);
+        dactyl.execute(":reload");
+EOF
+
+" Open link in private tab
+command private-tab -nargs=+ -description "Open Private Tab" -javascript <<EOF
+        privateTab.readyToOpenTab(true);
+        gBrowser.addTab("about:blank");
+        dactyl.execute(":tablast");
+        dactyl.execute(":open " + args);
+        privateTab.stopToOpenTabs();
+EOF
+
+" jump to page in pdf
+command! -nargs=1 pdfseek -js <<EOF
+if (!args) {
+    args = 1;
+}
+if (content.wrappedJSObject.PDFViewerApplication) {
+    content.wrappedJSObject.PDFViewerApplication.page = +args;
+}
+EOF
+
+" display tabgroup title on statusline {{{2
+js <<EOF
+overlay.overlayObject(statusline, {
+    updateTabCount: function updateTabCount(delayed) {
+        updateTabCount.superapply(this, arguments);
+        if (!delayed) {
+            let title = "";
+            let groups = services.sessionStore.getWindowValue(window, "tabview-groups");
+            if (groups) {
+                let active = JSON.parse(groups).activeGroupId;
+                let groupData = services.sessionStore.getWindowValue(window, "tabview-group");
+                title = JSON.parse(groupData)[active].title;
+            }
+        if (title) this.widgets.tabcount.value = "(" + title + ")" + this.widgets.tabcount.value;
+        }
+    }
+});
+EOF
+
+" ramback {{{2
+" kanged from https://addons.mozilla.org/en-US/firefox/addon/ramback/
+command! ramback -js <<EOF
+let observerService = Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService);
+observerService.notifyObservers(null, "memory-pressure", "heap-minimize");
+observerService.notifyObservers(null, "memory-pressure", "heap-minimize");
+observerService.notifyObservers(null, "memory-pressure", "heap-minimize");
+observerService.notifyObservers(null, "dump-mem-stats", "clean up, pig!");
+EOF
+
+" use google to get lwn subscription link
+autocmd -javascript PageLoad 'https://lwn.net/Articles/*' <<EOF
+if (doc.title.match(/subscription/i)) {
+let title = doc.getElementsByClassName("ArticleText")[0].getElementsByTagName("a")[0].innerHTML;
+dactyl.open('gl site:lwn.net/SubscriberLink "' + title + '"');
+}
+EOF
+
+" Command {{{1
+" smart reload {{{2
+command smartReload -js <<EOF
+if (buffer.URL.spec.contains('#')) {
+dactyl.execute("reload");
+} else {
+dactyl.open(buffer.URL.spec);
+}
+EOF
+nmap -builtin r :smartReload<CR>
+
+" flush browser dns {{{2
+command flushdns set! network.dnsCacheExpiration=0 | set! network.dnsCacheExpiration&
+
+" toggle http/https {{{2
+command gohttps -js <<EOF
+if (buffer.URL.spec.startsWith('http://')) {
+dactyl.open(String.replace(buffer.URL.spec, /^http/i, 'https'));
+} else if (buffer.URL.spec.startsWith('https://')) {
+dactyl.open(String.replace(buffer.URL.spec, /^https/i, 'http'));
+}
+EOF
+nmap -builtin gs :gohttps<CR>
+
+" google translate {{{2
+command trans -js <<EOF
+let getParameterByName = function(url, name) {
+let mname = name.replace(/[\[]/, '\\\[').replace(/[\]]/, '\\\]');
+let regexS = '[\\?&]' + mname + '=([^&#]*)';
+let regex = new RegExp(regexS);
+let results = regex.exec(url);
+if (results == null)
+return '';
+else
+return decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+if (buffer.URL.spec.startsWith('http://translate.google.com/')) {
+dactyl.open(getParameterByName(buffer.URL.spec, 'u'));
+} else {
+dactyl.open('http://translate.google.com/translate?hl=en&sl=auto&tl=en&u=' + encodeURIComponent(buffer.URL.spec));
+}
+EOF
+nmap -builtin ,t :trans<CR>
+
+command pocket open bml-pocket
+
+
+autocmd DOMLoad quora.com -js doc.getElementsByClassName('modal_signup_background')[0].parentNode.remove()
+
+autocmd Fullscreen .* :set guioptions+=s
+
+
+" Fix ublock and umatrix. This also seems to magically fix pocket extension popup.
+style -name ublock -agent * #nav-bar * {visibility: visible;}
+" vim: set ft=pentadactyl fdm=marker:
