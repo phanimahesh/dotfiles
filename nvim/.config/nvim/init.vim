@@ -7,6 +7,10 @@ set mouse=a
 
 " Unset all autocommands
 autocmd!
+
+" Assume I have python neovim package installed properly
+" Speeds up startup in neovim.
+let g:python3_host_skip_check=1
 " Reload vimrc on demand
 map <silent> <leader>V :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
