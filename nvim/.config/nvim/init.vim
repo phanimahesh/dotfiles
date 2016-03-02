@@ -219,6 +219,13 @@ Plug 'guyzmo/notmuch-abook'
 Plug 'phanimahesh/VimRepress'
 Plug 'mattboehm/vim-unstack'
 Plug 'mattboehm/vim-accordion'
+
+" Allow loading local .vimrc files on per project basis.
+Plug 'MarcWeber/vim-addon-local-vimrc'
+
+" Enable vim to understand filename:line:col and other common stacktrace
+" formats.
+Plug 'kopischke/vim-fetch'
 "
 " Vim-LS
 "    Livescript tools. Syntax, :LiveScript{Compile,Make,Run}
