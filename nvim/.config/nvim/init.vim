@@ -327,6 +327,10 @@ map <c-h> <c-w>h
 "  happen as if in command mode )
 imap <C-W> <C-O><C-W>
 
+" Map tab and shift-tab to switch buffers.
+nmap <silent> <tab> :bn<cr>
+nmap <silent> <S-tab> :bp<cr>
+
 " TODO: XXX
 " ==========================================================
 " Basic Settings
