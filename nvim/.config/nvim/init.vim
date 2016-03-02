@@ -55,6 +55,17 @@ Plug 'phanimahesh/clouds_midnight.vim'
 " Editor config.
 "     An editor agnostic specification for common settings
 Plug 'editorconfig/editorconfig-vim'
+
+" Allow loading local .vimrc files on per project basis.
+Plug 'MarcWeber/vim-addon-local-vimrc'
+
+" Enable vim to understand filename:line:col and other common stacktrace
+" formats.
+Plug 'kopischke/vim-fetch'
+
+" Send commands to terminal split using :T
+Plug 'kassio/neoterm'
+
 " YouCompleteMe
 "     The most awesome autocompleter for vim
 " Plug 'Valloric/YouCompleteMe', { 'do': 'YCM_CORES= $(( `getconf _NPROCESSORS_ONLN` - 1 )) ./install.py' }
@@ -220,12 +231,6 @@ Plug 'phanimahesh/VimRepress'
 Plug 'mattboehm/vim-unstack'
 Plug 'mattboehm/vim-accordion'
 
-" Allow loading local .vimrc files on per project basis.
-Plug 'MarcWeber/vim-addon-local-vimrc'
-
-" Enable vim to understand filename:line:col and other common stacktrace
-" formats.
-Plug 'kopischke/vim-fetch'
 "
 " Vim-LS
 "    Livescript tools. Syntax, :LiveScript{Compile,Make,Run}
@@ -244,7 +249,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'janko-m/vim-test'
 " Define additional top-level commands in vim for each entry in this array.
 let g:test#runner_commands = ['ExUnit']
-Plug 'kassio/neoterm'
 " " vim-test maps. I don't use them much.
 " map <silent> <leader>t :TestNearest<CR>
 " map <silent> <leader>f :TestFile<CR>
