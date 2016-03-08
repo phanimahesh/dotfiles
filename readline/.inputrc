@@ -1,0 +1,8 @@
+set editing-mode vi
+
+# Bind up and down to incrementally search history
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+# Ensure left and right work as expected with the above.
+"\e[C": forward-char
+"\e[D": backward-char
