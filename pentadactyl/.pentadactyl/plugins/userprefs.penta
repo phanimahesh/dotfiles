@@ -23,6 +23,12 @@ set! browser.startup.page=3
 set! browser.sessionstore.max_serialize_back=-1
 set! browser.sessionstore.max_serialize_forward=-1
 
+" Disable Hyperlink auditing
+set! browser.send_pings=false
+
+" Disable navigator.sendBeacon
+set! beacon.enabled=false
+
 " Use dark theme
 set! devtools.theme=dark
 
