@@ -43,8 +43,9 @@ set! devtools.toolbar.visible=true
 " set! devtools.gcli.eagerHelper=3
 " This can be annoying
 
-" Enable and force OCSP
+" Enable OCSP
 set! security.OCSP.enabled=1
+" Forcing OSCP sometimes slows things down.
 set! security.OCSP.require=false
 
 " Flash must be click to activate
