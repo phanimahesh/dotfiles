@@ -16,11 +16,6 @@ map -b k 8k
 map -b h 8h
 map -b l 8l
 
-" map ,b to bookmark in delicious.
-" bml-delicious is set as keyword for delicious bookmarklet.
-nmap -builtin ,b :open bml-delicious<CR>
-
-
 " Toogle click-to-play
 command toggle-click-to-play -js <<EOF
         if(Services.prefs.getBoolPref("plugins.click_to_play"))
