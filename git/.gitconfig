@@ -1,0 +1,125 @@
+# The sections are sorted alphabetically.
+
+# Help the lazy me.
+[alias]
+  s = status -sb
+  rup = remote -v update -p
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  serveall-ro = daemon --base-path=. --export-all --reuseaddr --informative-errors --verbose
+  serveall-rw = daemon --base-path=. --export-all --enable=receive-pack --reuseaddr --informative-errors --verbose
+  remove-deleted-files = "rm $(git ls-files -d)"
+  # Change date of the last commit safely. SOurce: http://stackoverflow.com/a/23693336/1276737 
+  # Usage: git change-date "2 hours ago"
+  change-date = "!d=\"$(date -d \"$1\")\" && shift && \
+    git diff-index --cached --quiet HEAD --ignore-submodules -- && \
+    GIT_COMMITTER_DATE=\"$d\" git commit --amend -C HEAD --date \"$d\"" \
+    || echo >&2 "error: date change failed: index not clean!"
+  # Generate .gitignore snippets from gitignore.io
+  genignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
+  # Helpers to inspect github pull requests locally.
+  # `git pr nnn remote` creates and checks out pr/nnn branch. Uses remote origin by default.
+  pr  = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+  # Cleans all local prs.
+  pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+  # Setup gh-pr pulling
+  # `git setup-pr-tracking remote will setup GH pr tracking on `git remote update`.
+  # Just `git checkout pr/nnn` to create a local branch and track the PR.
+  setup-gh-pr-tracking = "!git config --add remote.${2:-origin}.fetch \"+refs/pull/*/head:refs/remotes/${2:-origin}/pr/*\""
+  graph = "log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+  # Fun stuff
+  gen-comitmsg = "!curl -s whatthecommit.com/index.txt"
+  # Show verbose output about tags, branches or remotes
+  tags = tag -l
+  branches = branch -a
+  remotes = remote -v
+  # Cleanup merged branches
+  cleanup-merged =  "!git branch --no-color --merged | grep -v '*' | xargs -p git branch -d"
+  # Open github url with exact commit referenced by $1, head by default.
+  # Stolen from http://codeinthehole.com/writing/linking-to-github/
+  gh-url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"
+
+[branch]
+  autosetupmerge = always
+  autosetuprebase = always
+
+[clean]
+  # Always good to be forced to delete.
+  requireForce = true
+
+[color]
+  # I like colors.
+  ui = always
+
+[core]
+  excludesfile = ~/.gitignore_global
+
+[diff]
+  submodule = log
+  tool = splice
+
+[gc]
+  reflogExpire = never
+
+[help]
+  # Wait for 3 seconds and proceed with typo correction
+  autocorrect = 30
+
+[http]
+  # Prevent problems with http transport by using large buffer
+  postBuffer = 524288000
+
+# I like meld, but it's not available on OSX.
+[merge]
+  conflictstyle = diff3
+  log = 20
+  tool = splice
+
+# For those times when I make a bad wrapper script and exit 0 always.
+[mergetool]
+  trustExitCode = false
+
+[mergetool "splice"]
+  cmd = "nvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
+  trustExitCode = true
+
+[push]
+  default = upstream
+
+[rerere]
+  # Activate recording of resolved conflicts, so that identical conflict hunks
+  # can be resolved automatically, should they be encountered again.
+  enabled = true
+
+[status]
+  submodulesummary = true
+
+# URL rewriting {{{
+# Save troubles with moronic firewall and stupid proxy.
+# Use https for github when needed.
+; [url "https://github.com/"]
+;     insteadOf = git://github.com/
+;     insteadOf = ssh://git@github.com:
+;     insteadOf = git@github.com:
+;     insteadOf = https://github.com/
+; 
+; [url "git@github.com:"]
+;   insteadOf = git://github.com/
+;   insteadOf = ssh://git@github.com:
+;   insteadOf = git@github.com:
+;   insteadOf = https://github.com/
+; 
+; [url "https://git.gitorious.org/"]
+;     insteadOf = git://gitorious.org/
+;     insteadOf = ssh://git@gitorious.org:
+;     insteadOf = git@gitorious.org:
+
+; [url "https://jpmahesh@bitbucket.org/"]
+;     insteadOf = git@bitbucket.org:
+# }}}
+
+# User info
+[user]
+  name = J Phani Mahesh
+  email = phanimahesh@gmail.com
+  signingkey = 62E2A632
