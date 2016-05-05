@@ -284,15 +284,35 @@ let g:neomake_elixir_mix_maker = {
       \ '** %s %f:%l: %m,' .
       \ '%f:%l: warning: %m'
       \ }
+Plug 'slashmili/alchemist.vim', {'for': 'elixir'}
+Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'lucidstack/hex.vim'
+
 " autocmd BufWritePost *.ex Neomake!
 
 Plug 'joedicastro/vim-pentadactyl'
 Plug 'sorah/presen.vim'
-
+Plug 'terryma/vim-multiple-cursors'
+"
+"" Custom text objects {{{
+" Library to define custom test objects
+Plug 'kana/vim-textobj-user'
+" ae -> entire buffer
+" ie -> entire buffer minus newlines at beginning and end
+Plug 'kana/vim-textobj-entire'
+" ii -> stuff indented at same level
+Plug 'kana/vim-textobj-indent'
+" il -> current line minus leading whitespace
+Plug 'kana/vim-textobj-line'
+"}}}
+"
 " Libraries {{{
 "
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'benekastah/neomake'
+Plug 'mattn/webapi-vim'
+
+
 " Plug 'fmoralesc/nvimfs'
 "
 "}}}
@@ -391,7 +411,7 @@ set pumheight=6             " Keep a small completion window
 
 
 """ Moving Around/Editing
-" Highlight current line and column  
+" Highlight current line and column
 autocmd WinLeave * set nocursorline nocursorcolumn
 autocmd WinEnter * set cursorline cursorcolumn
 set cursorline cursorcolumn
