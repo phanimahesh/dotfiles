@@ -496,8 +496,8 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Map semicolon to colon. Default action of repeating prev f/t is not used
 " often. Map ;; to ; to use it when needed.
-noremap ; :
-noremap ;; ;
+" noremap ; :
+" noremap ;; ;
 
 " Uncomment to see a line marking the collumn 79
 " set colorcolumn=79
