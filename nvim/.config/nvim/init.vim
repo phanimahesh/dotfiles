@@ -129,7 +129,11 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Open NerdTree
 map <F2> :NERDTreeToggle<CR>
-
+"
+" Neco-ghc
+Plug 'eagletmt/neco-ghc'
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:necoghc_enable_detailed_browse = 1
 "
 " GunDo
 "     Visual Undo in vim with diff's to check the differences
