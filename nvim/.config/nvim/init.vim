@@ -66,6 +66,12 @@ Plug 'kopischke/vim-fetch'
 " Send commands to terminal split using :T
 Plug 'kassio/neoterm'
 
+" Copy things to system clipboard
+" cp<motion> -> copy <motion>
+" cP -> copy current line
+" cv -> paste from system clipboard
+Plug 'christoomey/vim-system-copy'
+
 " YouCompleteMe
 "     The most awesome autocompleter for vim
 " Plug 'Valloric/YouCompleteMe', { 'do': 'YCM_CORES= $(( `getconf _NPROCESSORS_ONLN` - 1 )) ./install.py' }
