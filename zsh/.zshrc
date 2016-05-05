@@ -85,6 +85,7 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export EDITOR=nvim
 alias vim=nvim
+alias vimagit="vim +MagitOnly"
 alias sudo='sudo '
 # Hook for desk activation
 [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
