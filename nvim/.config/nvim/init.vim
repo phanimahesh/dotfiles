@@ -244,6 +244,8 @@ Plug 'phanimahesh/VimRepress'
 Plug 'mattboehm/vim-unstack'
 Plug 'mattboehm/vim-accordion'
 
+Plug 'ledger/vim-ledger'
+
 "
 " Vim-LS
 "    Livescript tools. Syntax, :LiveScript{Compile,Make,Run}
