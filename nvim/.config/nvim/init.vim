@@ -94,7 +94,8 @@ Plug 'vim-scripts/numbers.vim'
 "
 " Fugitive
 "    Interface with git from vim
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
+Plug 'jreybert/vimagit'
 "
 " Abolish
 "    Spelling coercions, substitutions, identifier coercions
@@ -448,7 +449,7 @@ set showcmd                 " Show incomplete normal mode commands as I type.
 set report=0                " : commands always print changed line count.
 set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
 set laststatus=2            " Always show statusline, even if only 1 window.
-set statusline=[%n]\ %f%=[%l:%v]%m%w%y\ %{fugitive#statusline()}
+set statusline=[%n]\ %f%=[%l:%v]%m%w%y "\ %{fugitive#statusline()}
 
 " displays tabs with :set list & displays when a line runs off-screen
 set listchars=tab:»-,eol:¶,trail:-,precedes:»,extends:«
