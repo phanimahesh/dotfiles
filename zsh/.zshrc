@@ -89,3 +89,13 @@ alias vimagit="vim +MagitOnly"
 alias sudo='sudo '
 # Hook for desk activation
 [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+# Larger bash history (allow 32³ entries; default is 500)
+export HISTSIZE=50000000;
+export HISTFILESIZE=$HISTSIZE;
+export HISTCONTROL=ignoredups;
+# Make some commands not show up in history
+export HISTIGNORE=" *:ls:cd:cd -:pwd:exit:date:* --help:* -h:man *:hledger *";
