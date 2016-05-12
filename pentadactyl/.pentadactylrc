@@ -129,6 +129,7 @@ command pocket open bml-pocket
 
 
 autocmd DOMLoad quora.com -js doc.getElementsByClassName('modal_signup_background')[0].parentNode.remove()
+autocmd DOMLoad wired.com -js doc.getElementById('veil').remove()
 
 autocmd Fullscreen .* :set guioptions+=s
 
