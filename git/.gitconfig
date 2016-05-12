@@ -38,6 +38,9 @@
   # Open github url with exact commit referenced by $1, head by default.
   # Stolen from http://codeinthehole.com/writing/linking-to-github/
   gh-url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"
+  # Credit an author on the latest commit
+  credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
 
 [branch]
   autosetupmerge = always
