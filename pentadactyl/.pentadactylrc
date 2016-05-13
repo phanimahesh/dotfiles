@@ -131,6 +131,14 @@ command pocket open bml-pocket
 autocmd DOMLoad quora.com -js doc.getElementsByClassName('modal_signup_background')[0].parentNode.remove()
 autocmd DOMLoad wired.com -js doc.getElementById('veil').remove()
 
+" The only time I open stackshare is to open the repo.
+" AUtomate that for me pliss."
+autocmd DOMLoad stackshare.io -js <<EOF
+  let links = doc.getElementsByClassName('source-code-link');
+  if (links.length == 1){
+    doc.location.assign(links[0].href);
+  }
+EOF
 autocmd Fullscreen .* :set guioptions+=s
 
 
