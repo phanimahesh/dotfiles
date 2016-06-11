@@ -61,7 +61,6 @@ plugins=(
         bower               # Bower completions, aliases bi,bl,bs
         # tmux
         # tmuxinator
-        sudo                # ESC twice to prepend sudo.
         task                # Taskwarrior auto complete. apt install
         # python            # boring.
         pep8                # Auto complete
