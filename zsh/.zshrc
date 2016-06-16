@@ -84,6 +84,11 @@ alias sudo='sudo '
 # Hook for desk activation
 [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
 
+# Source adsf if it exists
+if [ -f $HOME/.asdf/asdf.sh ]; then
+  source $HOME/.asdf/asdf.sh
+fi
+
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 
