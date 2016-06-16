@@ -209,7 +209,7 @@ bindsym --release $mod+Print exec scrot -s -e 'mkdir -p ~/Pictures/Screenshots &
 # Startup applications
 #
 # Latlong 28,78 is roughly near Delhi.
-exec xflux -l 28 -g 78
+exec ~/bin/xflux -l 28 -g 78
 exec --no-startup-id sh -c 'i3-msg workspace 1; i3-sensible-terminal -e irssi &'
 exec skype &
 exec insync start
