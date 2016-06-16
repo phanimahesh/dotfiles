@@ -1,0 +1,9 @@
+#! /bin/sh
+touchpad_off=$(synclient -l | grep TouchpadOff | awk '{print $3}')
+if [ $touchpad_off -eq 0 ]; then
+  synclient TouchpadOff=1
+  notify-send "Touchpad disabled" -h string:synchronous:touchpad
+else
+  synclient TouchpadOff=0
+  notify-send "Touchpad enabled" -h string:synchronous:touchpad
+fi
