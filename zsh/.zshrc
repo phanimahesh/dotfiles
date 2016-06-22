@@ -89,6 +89,14 @@ if [ -f $HOME/.asdf/asdf.sh ]; then
   source $HOME/.asdf/asdf.sh
 fi
 
+# Source nix if it exists
+if [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+  source $HOME/.nix-profile/etc/profile.d/nix.sh
+  # Let's also update the completions
+  fpath=($HOME/.nix-profile/share/zsh/site-functions $fpath)
+  autoload -U compinit && compinit
+fi
+
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 
