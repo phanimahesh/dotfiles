@@ -138,11 +138,11 @@ Plug 'eagletmt/neco-ghc'
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 let g:necoghc_enable_detailed_browse = 1
 "
-" GunDo
+" MunDo
 "     Visual Undo in vim with diff's to check the differences
-Plug 'sjl/gundo.vim', { 'on': 'GundoToggle'}
-" Load the Gundo window
-map <leader>g :GundoToggle<CR>
+Plug 'simnalamburt/vim-mundo', {'on': ['MundoToggle', 'MundoShow', 'MundoHide', 'MundoRenderGraph']}
+" Load the Mundo window
+map <leader>g :MundoToggle<CR>
 "
 " Rainbow CSV
 "     Highlights different columns of CSV in different colors
