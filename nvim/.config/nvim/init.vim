@@ -130,6 +130,9 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Open NerdTree
 map <F2> :NERDTreeToggle<CR>
 "
+" FZF - fuzzy finder
+Plug 'junegunn/fzf'
+"
 " Neco-ghc
 Plug 'eagletmt/neco-ghc'
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
