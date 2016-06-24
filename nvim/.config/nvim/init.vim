@@ -94,7 +94,7 @@ Plug 'vim-scripts/numbers.vim'
 "
 " Fugitive
 "    Interface with git from vim
-" Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 "
 " Abolish
