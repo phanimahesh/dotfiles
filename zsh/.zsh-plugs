@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+# -*- mode: zsh -*-
+# vim:ft=zsh
+#
+# *** ZPLUG EXTERNAL FILE ***
+# You can register plugins or commands to zplug on the
+# command-line. If you use zplug on the command-line,
+# it is possible to write more easily its settings
+# by grace of the command-line completion.
+# In this case, zplug spit out its settings to
+# /home/jpm/.zplug/packages.zsh instead of .zshrc.
+# If you launch new zsh process, zplug load command
+# automatically search this file and run source command.
+#
+#
+# Example:
+# zplug "b4b4r07/enhancd", as:plugin, of:"*.sh"
+# zplug "rupa/z",          as:plugin, of:"*.sh"
+#
+zplug "zplug/zplug"
+zplug "themes/alanpeabody", from:oh-my-zsh
+# zplug "plugins/history-substring-search", from:oh-my-zsh
+zplug "zsh-users/zsh-completions"
+zplug "RobSis/zsh-completion-generator"
+zplug "~/.nix-profile/etc/profile.d", from:local, use:"*.sh"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "Tarrasch/zsh-autoenv"
