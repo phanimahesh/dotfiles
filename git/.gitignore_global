@@ -1,5 +1,3 @@
-# Created by https://www.gitignore.io/api/linux,osx,vim,tags
-
 ### Linux ###
 *~
 
@@ -74,4 +72,6 @@ cscope.po.out
 ## Custom additions
 # artifacts from git merge conflicts
 *.orig
+# Autoenv
+.autoenv.zsh
 
