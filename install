@@ -1,0 +1,6 @@
+#! /usr/bin/env zsh
+for i (*(/)); do
+  stow --restow \
+    --ignore=.gitignore \
+    --target=$HOME $i;
+done
