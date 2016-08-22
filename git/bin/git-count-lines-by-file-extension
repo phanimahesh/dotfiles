@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+git ls-files | xargs wc -l | awk -F ' +|\\.|/' '{ sumlines[$NF] += $2 } END { for (ext in sumlines) print ext, sumlines[ext] }'

@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+git ls-remote --heads ${1-origin} \
+  | awk '{print $2}' \
+  | sed -e 's/refs\/heads\///' \
+  | xargs \
+      --no-run-if-empty \
+      --interactive \
+      --max-args=1 \
+      git push origin --delete
