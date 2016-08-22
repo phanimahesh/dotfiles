@@ -73,10 +73,15 @@
   # Prevent problems with http transport by using large buffer
   postBuffer = 524288000
 
-# I like meld, but it's not available on OSX.
 [merge]
   conflictstyle = diff3
-  log = 20
+  # Merge commits should carry summaries of included commits
+  # This is a limit, there's no all option and true is 20.
+  # That's just stupid, but one can argue >20 commits in merges
+  # are bad. Whatever. I deal with bad code.
+  # I hope I won't have to deal with a merge of >100000 commits.
+  log = 100000
+  # I like meld, but it's not available on OSX.
   tool = splice
 
 # For those times when I make a bad wrapper script and exit 0 always.
