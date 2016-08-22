@@ -123,8 +123,13 @@
 ;     insteadOf = ssh://git@gitorious.org:
 ;     insteadOf = git@gitorious.org:
 
-; [url "https://jpmahesh@bitbucket.org/"]
-;     insteadOf = git@bitbucket.org:
+# Because bitbucket ssh is screwed up and
+# access fails two times out of every three.
+# Or more.
+[url "https://phanimahesh@bitbucket.org/"]
+    insteadOf = git@bitbucket.org:
+    insteadOf = ssh://git@bitbucket.org:
+    insteadOf = bb:
 # }}}
 
 # User info
