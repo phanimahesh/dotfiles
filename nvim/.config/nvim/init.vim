@@ -212,23 +212,10 @@ Plug 'ervandew/supertab'
 " " Run command-t file search
 " map <leader>f :CommandT<CR>
 "
-" Find whichever is available and use it.
+" prefer ag when available
 if executable('ag')
   set grepprg=ag
-  Plug 'mileszs/ack.vim'
-  let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
-elseif executable('ack-grep')
-  set grepprg=ack-grep
-  let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-  Plug 'mileszs/ack.vim'
-elseif executable('ack')
-  set grepprg=ack
-  Plug 'mileszs/ack.vim'
 endif
-" Ack searching
-" nmap <leader>a <Esc>:Ack!
-" here for reference, but I realized I like :grep more. It uses ack/ag if
-" available, thanks to the block above.
 
 Plug 'vim-scripts/TaskList.vim'
 " Toggle the tasklist
