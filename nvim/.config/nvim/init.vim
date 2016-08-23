@@ -186,7 +186,9 @@ Plug 'kchmck/vim-coffee-script'
 "
 " Snipmate
 "     Configurable snippets to avoid re-typing common comands
-Plug 'msanders/snipmate.vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
+Plug 'scrooloose/snipmate-snippets'
 "
 " Surround
 "    Allows you to surround text with open/close tags
@@ -232,7 +234,6 @@ map <leader>td <Plug>TaskList
 " Plug 'altercation/vim-colors-solarized'
 Plug 'plasticboy/vim-markdown'
 Plug 'tomtom/tlib_vim'
-Plug 'scrooloose/snipmate-snippets'
 Plug 'tpope/vim-commentary'
 Plug 'def-lkb/merlin'
 Plug 'sukima/xmledit', {'for': ['xslt', 'xml']}
