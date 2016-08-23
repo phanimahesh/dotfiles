@@ -181,19 +181,13 @@ Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css','less'] } " vim-less can use this too.
 " =========== End of manually reviewed stuff. =========
 
-Plug 'vim-scripts/pep8', {'for': 'python' }
-" Run pep8
-let g:pep8_map='<leader>8'
+Plug 'klen/python-mode', {'for': 'python' }
 " Quick Radon
 "    Reporting for python code
 "       - Cyclomatic Complexity
 "       - Metrics (SLOC, LOC, Comments, ...)
 "       - Maintainability Index
 Plug 'vim-scripts/vim-quick-radon', {'for': 'python', 'on': 'QuickRadon'}
-"
-" Pydoc
-"    Opens up pydoc within vim
-Plug 'fs111/pydoc.vim', { 'for': 'python' }
 
 Plug 'scrooloose/syntastic'
 Plug 'raimondi/delimitmate'
@@ -218,12 +212,6 @@ Plug 'ervandew/supertab'
 " " Run command-t file search
 " map <leader>f :CommandT<CR>
 "
-" PyFlakes
-"     Underlines and displays errors with Python on-the-fly
-Plug 'mitechie/pyflakes-pathogen'
-" Don't let pyflakes use the quickfix window
-let g:pyflakes_use_quickfix = 0
-"
 " Find whichever is available and use it.
 if executable('ag')
   set grepprg=ag
@@ -245,7 +233,6 @@ endif
 Plug 'vim-scripts/TaskList.vim'
 " Toggle the tasklist
 map <leader>td <Plug>TaskList
-" Plug 'sontek/rope-vim'
 " Plug 'marcweber/vim-addon-mw-utils'
 " Plug 'altercation/vim-colors-solarized'
 Plug 'plasticboy/vim-markdown'
