@@ -205,13 +205,6 @@ Plug 'scrooloose/snipmate-snippets'
 Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
 "
-" " Commant-T
-" "     Allows easy search and opening of files within a given path
-" "     Requires ruby, not supported in neovim.
-" Plug 'wincent/Command-T'
-" " Run command-t file search
-" map <leader>f :CommandT<CR>
-"
 " prefer ag when available
 if executable('ag')
   set grepprg=ag
