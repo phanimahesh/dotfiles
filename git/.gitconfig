@@ -40,6 +40,7 @@
   gh-url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"
   # Credit an author on the latest commit
   credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+  list-files-in-commit = "!f(){ git diff-tree --no-commit-id --name-only -r ${1:-HEAD}; }; f"
 
 
 [branch]
