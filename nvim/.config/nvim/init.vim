@@ -136,6 +136,7 @@ map <F2> :NERDTreeToggle<CR>
 "
 " FZF - fuzzy finder
 Plug 'junegunn/fzf'
+map <F3> :FZF<CR>
 "
 " Neco-ghc
 Plug 'eagletmt/neco-ghc'
