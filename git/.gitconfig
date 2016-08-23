@@ -25,7 +25,7 @@
   # Setup gh-pr pulling
   # `git setup-pr-tracking remote will setup GH pr tracking on `git remote update`.
   # Just `git checkout pr/nnn` to create a local branch and track the PR.
-  setup-gh-pr-tracking = "!git config --add remote.${2:-origin}.fetch \"+refs/pull/*/head:refs/remotes/${2:-origin}/pr/*\""
+  setup-gh-pr-tracking = "!f() { git config --add remote.${1:-origin}.fetch \"+refs/pull/*/head:refs/remotes/${1:-origin}/pr/*\"; }; f"
   graph = "log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
   # Fun stuff
   gen-comitmsg = "!curl -s whatthecommit.com/index.txt"
