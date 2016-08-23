@@ -121,9 +121,10 @@ let g:rooter_resolve_links = 1
 let g:rooter_change_directory_for_non_project_files = 1
 let g:rooter_patterns = [ 'README.md', 'mix.exs', 'package.json', '.git', '.git/', '.hg/' ]
 
-Plug 'bsdelf/bufferhint'
-nnoremap <leader>- :call bufferhint#Popup()<CR>
 
+let unite_commands = [ 'Unite', 'UniteBookmarkAdd', 'UniteClose', 'UniteDo', 'UniteFirst', 'UniteLast', 'UniteNext', 'UnitePrevious', 'UniteResume', 'UniteWithBufferDir', 'UniteWithCurrentDir', 'UniteWithCursorWord', 'UniteWithInput', 'UniteWithInputDirectory', 'UniteWithProjectDir']
+Plug 'Shougo/unite.vim', {'on': unite_commands}
+nnoremap <leader>- :Unite buffer<CR>
 " On-demand loaded Plugins
 " ----------------------------------------------------------
 "
