@@ -274,10 +274,20 @@ bindsym --release $mod+Print exec scrot -s -e 'mkdir -p ~/Pictures/Screenshots &
 bindsym XF86Display exec --no-startup-id ~/bin/refresh-outputs
 
 # Startup applications
-#
+
+exec_always ~/bin/refresh-outputs
+# Setup background. Runs feh --bg-fill <image>
+# Automatically updated by feh when I choose a new image
+exec_always ~/.fehbg
+# Xflux, for my eyes
 # Latlong 28,78 is roughly near Delhi.
-exec ~/bin/xflux -l 28 -g 78
-exec --no-startup-id sh -c 'i3-msg workspace 1; i3-sensible-terminal -e irssi &'
-exec skype &
-exec insync start
-exec_always notify-send "i3 Ready"
+exec --no-startup-id xflux -l 28 -g 78
+# MPD and MPDRIS2 helper for MPD
+exec --no-startup-id mpd
+exec --no-startup-id mpDris2 &
+exec --no-startup-id nm-applet &
+# alt+tab to switch window, alt+` to run+ssh
+exec --no-startup-id rofi -key-window mod1+Tab -key-run mod1+grave -fuzzy &
+# Bunch everything requiring online connection here
+exec --no-startup-id sh -c '[ $(echo "NO\nYES" | dmenu -i -p "Autostart online apps?") = "YES" ] && autostart-online-apps' 
+exec_always notify-send "i3 at your service"
