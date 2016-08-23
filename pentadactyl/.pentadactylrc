@@ -16,14 +16,6 @@ map -b k 8k
 map -b h 8h
 map -b l 8l
 
-" Toogle click-to-play
-command toggle-click-to-play -js <<EOF
-        if(Services.prefs.getBoolPref("plugins.click_to_play"))
-            Services.prefs.setBoolPref("plugins.click_to_play", false);
-        else
-            Services.prefs.setBoolPref("plugins.click_to_play", true);
-        dactyl.execute(":reload");
-EOF
 
 " Open link in private tab
 command private-tab -nargs=+ -description "Open Private Tab" -javascript <<EOF
