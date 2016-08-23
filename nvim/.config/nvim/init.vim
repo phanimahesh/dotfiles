@@ -243,7 +243,8 @@ Plug 'sukima/xmledit', {'for': ['xslt', 'xml']}
 "    Depends on xmledit
 Plug 'vim-scripts/xslt', {'for': ['xslt', 'xml']}
 Plug 'vim-scripts/XSLT-syntax', {'for': ['xslt', 'xml']}
-Plug 'vim-scripts/emmet.vim' " Zencoding has been renamed to emmet
+" Zencoding has been renamed to emmet
+Plug 'vim-scripts/emmet.vim', {'for': ['xml', 'xslt', 'html']}
 Plug 'edsono/vim-matchit'
 Plug 'vim-scripts/fuzzyfinder'
 Plug 'vim-scripts/l9'
