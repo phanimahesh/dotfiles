@@ -82,11 +82,25 @@ Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neopairs.vim'
 Plug 'Konfekt/FastFold'
 Plug 'Shougo/context_filetype.vim'
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#ignore_sources = {}
-" let g:deoplete#ignore_sources._ = ['buffer']
-" End Deoplete }}}
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources = {}
+let g:deoplete#ignore_sources = {}
+let g:deoplete#keyword_patterns = {}
 "
+" Completion sources for Deoplete {{{
+Plug 'Shougo/neco-vim'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'SevereOverfl0w/deoplete-github'
+let g:deoplete#sources.gitcommit=['github']
+let g:deoplete#keyword_patterns.gitcommit = '.+'
+
+autocmd! User deoplete-github call deoplete#util#set_pattern(
+  \ g:deoplete#omni#input_patterns,
+  \ 'gitcommit', [g:deoplete#keyword_patterns.gitcommit])
+" End Completion sources}}}
+"
+" End Deoplete }}}
+
 " Numbers
 "    Context sensitive numbering.
 "    Absolute in insert mode and relative in normal.
