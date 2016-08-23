@@ -303,31 +303,6 @@ Plug 'kana/vim-textobj-line'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'benekastah/neomake'
 Plug 'mattn/webapi-vim'
-
-
-" Plug 'fmoralesc/nvimfs'
-"
-"}}}
-
-" Disabled Plugins {{{
-" ----------------------------------------------------------
-" Interesting, but requires tweaking for my use case
-" Plug 'vim-scripts/MakeShift'
-"
-" This was good, but simplicity won after a short trial
-" Plug 'bling/vim-airline'
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline_powerline_fonts = 1
-" autocmd VimEnter * AirlineTheme hybrid
-"
-" A companion to airline that sets matching tmux statusline
-" Plug 'edkolev/tmuxline.vim'
-"
-" Fancy startup page
-" Plug 'vim-scripts/vim-startify'
-"
-" Detailed Color Scheme
-" Plug 'vim-scripts/detailed'
 "}}}
 call plug#end()
 " ==========================================================
