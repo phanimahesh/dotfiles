@@ -82,15 +82,6 @@ dactyl.open('gl site:lwn.net/SubscriberLink "' + title + '"');
 EOF
 
 " Command {{{1
-" smart reload {{{2
-command smartReload -js <<EOF
-if (buffer.URL.spec.contains('#')) {
-dactyl.execute("reload");
-} else {
-dactyl.open(buffer.URL.spec);
-}
-EOF
-nmap -builtin r :smartReload<CR>
 
 " flush browser dns {{{2
 command flushdns set! network.dnsCacheExpiration=0 | set! network.dnsCacheExpiration&
