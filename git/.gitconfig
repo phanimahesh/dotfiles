@@ -28,7 +28,7 @@
   setup-gh-pr-tracking = "!f() { git config --add remote.${1:-origin}.fetch \"+refs/pull/*/head:refs/remotes/${1:-origin}/pr/*\"; }; f"
   graph = "log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
   # Fun stuff
-  gen-comitmsg = "!curl -s whatthecommit.com/index.txt"
+  gen-commitmsg = "!curl -s whatthecommit.com/index.txt"
   # Show verbose output about tags, branches or remotes
   tags = tag -l
   branches = branch -a
