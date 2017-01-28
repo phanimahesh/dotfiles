@@ -9,4 +9,4 @@
   url = https://github.com/syl20bnr/spacemacs
 [submodule "zsh/.zplug"]
 	path = zsh/.zplug
-	url = gh:zplug/zplug
+	url = https://github.com/zplug/zplug

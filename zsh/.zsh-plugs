@@ -17,11 +17,11 @@
 # zplug "b4b4r07/enhancd", as:plugin, of:"*.sh"
 # zplug "rupa/z",          as:plugin, of:"*.sh"
 #
-zplug "zplug/zplug"
-zplug "themes/alanpeabody", from:oh-my-zsh
-# zplug "plugins/history-substring-search", from:oh-my-zsh
-zplug "zsh-users/zsh-completions"
-zplug "RobSis/zsh-completion-generator"
-zplug "~/.nix-profile/etc/profile.d", from:local, use:"*.sh"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "Tarrasch/zsh-autoenv"
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug 'themes/alanpeabody', from:oh-my-zsh
+# zplug 'plugins/history-substring-search', from:oh-my-zsh
+zplug 'zsh-users/zsh-completions'
+zplug 'RobSis/zsh-completion-generator'
+zplug '~/.nix-profile/etc/profile.d', from:local, use:'*.sh'
+zplug 'zsh-users/zsh-history-substring-search'
+zplug 'Tarrasch/zsh-autoenv'
