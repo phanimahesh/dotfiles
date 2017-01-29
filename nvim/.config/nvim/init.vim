@@ -282,6 +282,8 @@ Plug 'lucidstack/hex.vim'
 
 " autocmd BufWritePost *.ex Neomake!
 
+Plug 'jceb/vim-orgmode'
+
 Plug 'joedicastro/vim-pentadactyl'
 Plug 'sorah/presen.vim'
 Plug 'terryma/vim-multiple-cursors'
