@@ -77,7 +77,7 @@ Plug 'christoomey/vim-system-copy'
 " Plug 'Valloric/YouCompleteMe', { 'do': 'YCM_CORES= $(( `getconf _NPROCESSORS_ONLN` - 1 )) ./install.py' }
 " Or should I use Deoplete?
 " Deoplete and recommendations {{{
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neopairs.vim'
 Plug 'Konfekt/FastFold'
