@@ -3,6 +3,19 @@ REPORTTIME=5
 
 ZPLUG_LOADFILE=$HOME/.zsh-plugs
 source $HOME/.zplug/init.zsh
+# Prefer shallow clones for zplug managed repos.
+zstyle ":zplug:tag" depth 10
+# Install plugins if there are plugins that have not been installed
+if ! zplug check; then
+  # This weird hack is to prevent a message when some plugins are skipped
+  # due to if: conditions.
+  zplug check --verbose
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
+# Finally load plugins
 zplug load
 
 setopt interactivecomments

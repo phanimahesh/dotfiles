@@ -2,26 +2,27 @@
 # -*- mode: zsh -*-
 # vim:ft=zsh
 #
-# *** ZPLUG EXTERNAL FILE ***
-# You can register plugins or commands to zplug on the
-# command-line. If you use zplug on the command-line,
-# it is possible to write more easily its settings
-# by grace of the command-line completion.
-# In this case, zplug spit out its settings to
-# /home/jpm/.zplug/packages.zsh instead of .zshrc.
-# If you launch new zsh process, zplug load command
-# automatically search this file and run source command.
-#
-#
-# Example:
-# zplug "b4b4r07/enhancd", as:plugin, of:"*.sh"
-# zplug "rupa/z",          as:plugin, of:"*.sh"
-#
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug 'themes/alanpeabody', from:oh-my-zsh
-# zplug 'plugins/history-substring-search', from:oh-my-zsh
-zplug 'zsh-users/zsh-completions'
-zplug 'RobSis/zsh-completion-generator'
-zplug '~/.nix-profile/etc/profile.d', from:local, use:'*.sh'
-zplug 'zsh-users/zsh-history-substring-search'
-zplug 'Tarrasch/zsh-autoenv'
+# Allow zplug to manage itself
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
+# When nix is installed and setup, load scripts/plugins from there
+zplug "~/.nix-profile/etc/profile.d", \
+  from:local, use:"*.sh", \
+  if:"[ -d ~/.nix-profile ]"
+# This is a theme I like. Let's get it
+zplug "themes/alanpeabody", from:oh-my-zsh
+# Lots of contributed completions.
+zplug "zsh-users/zsh-completions"
+# Remind if there's an alias to the command being run
+zplug "djui/alias-tips"
+# Automatically load per directory env files
+# (technically full fledged scripts,
+#  but bad idea to do anything except tweak env)
+zplug "Tarrasch/zsh-autoenv"
+
+zplug "plugins/history-substring-search", from:oh-my-zsh
+zplug "RobSis/zsh-completion-generator"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "stedolan/jq", \
+    from:gh-r, \
+    as:command, \
+    rename-to:jq
