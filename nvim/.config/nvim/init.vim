@@ -226,7 +226,6 @@ Plug 'vim-scripts/xslt', {'for': ['xslt', 'xml']}
 Plug 'vim-scripts/XSLT-syntax', {'for': ['xslt', 'xml']}
 " Zencoding has been renamed to emmet
 Plug 'vim-scripts/emmet.vim', {'for': ['xml', 'xslt', 'html']}
-Plug 'edsono/vim-matchit'
 Plug 'vim-scripts/fuzzyfinder'
 Plug 'vim-scripts/l9'
 Plug 'vim-scripts/vim-vagrant'
