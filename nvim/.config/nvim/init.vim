@@ -213,7 +213,7 @@ endif
 Plug 'vim-scripts/TaskList.vim'
 " Toggle the tasklist
 map <leader>td <Plug>TaskList
-" Plug 'marcweber/vim-addon-mw-utils'
+Plug 'marcweber/vim-addon-mw-utils'
 " Plug 'altercation/vim-colors-solarized'
 Plug 'plasticboy/vim-markdown'
 Plug 'tomtom/tlib_vim'
