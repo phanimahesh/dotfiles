@@ -1,28 +1,42 @@
 #!/usr/bin/env zsh
 # -*- mode: zsh -*-
 # vim:ft=zsh
-#
+
 # Allow zplug to manage itself
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
+
 # When nix is installed and setup, load scripts/plugins from there
 zplug "~/.nix-profile/etc/profile.d", \
   from:local, use:"*.sh", \
   if:"[ -d ~/.nix-profile ]"
+
 # This is a theme I like. Let's get it
 zplug "themes/alanpeabody", from:oh-my-zsh
+
 # Lots of contributed completions.
 zplug "zsh-users/zsh-completions"
+
 # Remind if there's an alias to the command being run
-zplug "djui/alias-tips"
+# zplug "djui/alias-tips"
+
 # Automatically load per directory env files
 # (technically full fledged scripts,
 #  but bad idea to do anything except tweak env)
 zplug "Tarrasch/zsh-autoenv"
 
-zplug "plugins/history-substring-search", from:oh-my-zsh
-zplug "RobSis/zsh-completion-generator"
 zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "RobSis/zsh-completion-generator"
 zplug "stedolan/jq", \
     from:gh-r, \
     as:command, \
     rename-to:jq
+zplug "ericchiang/pup", \
+  from:gh-r, \
+  as:command
+zplug "BurntSushi/ripgrep", \
+  from:gh-r, \
+  as:command, \
+  rename-to:rg
+zplug "BurntSushi/xsv", from:gh-r, as:command
+zplug "github/hub", from:gh-r, as:command

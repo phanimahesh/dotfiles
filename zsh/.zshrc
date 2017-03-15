@@ -4,7 +4,7 @@ REPORTTIME=5
 ZPLUG_LOADFILE=$HOME/.zsh-plugs
 source $HOME/.zplug/init.zsh
 # Prefer shallow clones for zplug managed repos.
-zstyle ":zplug:tag" depth 10
+zstyle ":zplug:tag" depth 1
 # Install plugins if there are plugins that have not been installed
 if ! zplug check; then
   # This weird hack is to prevent a message when some plugins are skipped
