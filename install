@@ -1,4 +1,5 @@
 #! /usr/bin/env zsh
+git submodule update --init --recursive
 for i (*(/)); do
   stow --restow \
     --ignore=.gitignore \
