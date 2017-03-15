@@ -132,9 +132,14 @@
 # access fails two times out of every three.
 # Or more.
 [url "https://phanimahesh@bitbucket.org/"]
-    insteadOf = git@bitbucket.org:
-    insteadOf = ssh://git@bitbucket.org:
-    insteadOf = bb:
+  insteadOf = git@bitbucket.org:
+  insteadOf = ssh://git@bitbucket.org:
+  insteadOf = bb:
+
+# I want to git clone aur:package for AUR packages
+[url "https://aur.archlinux.org/"]
+  insteadOf = aur:
+
 # }}}
 
 # User info
