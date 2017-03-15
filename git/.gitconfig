@@ -55,6 +55,10 @@
   # I like colors.
   ui = always
 
+[commit]
+  # Always sign commits.
+  gpgsign = true
+
 [core]
   excludesfile = ~/.gitignore_global
   trustctime = false
