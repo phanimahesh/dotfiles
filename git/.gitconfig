@@ -9,7 +9,7 @@
   serveall-ro = daemon --base-path=. --export-all --reuseaddr --informative-errors --verbose
   serveall-rw = daemon --base-path=. --export-all --enable=receive-pack --reuseaddr --informative-errors --verbose
   remove-deleted-files = "rm $(git ls-files -d)"
-  # Change date of the last commit safely. SOurce: http://stackoverflow.com/a/23693336/1276737 
+  # Change date of the last commit safely. Source: http://stackoverflow.com/a/23693336/1276737
   # Usage: git change-date "2 hours ago"
   change-date = "!d=\"$(date -d \"$1\")\" && shift && \
     git diff-index --cached --quiet HEAD --ignore-submodules -- && \
