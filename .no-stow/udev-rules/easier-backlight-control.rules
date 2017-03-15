@@ -1,0 +1,6 @@
+# Allow users from group `video` to write to
+# /sys/class/backlight/*/brightness, which changes screen brightness
+# xbacklight provided by acpilight uses this.
+SUBSYSTEM=="backlight", ACTION=="add", \
+  RUN+="/bin/chgrp video %S%p/brightness", \
+  RUN+="/bin/chmod g+w %S%p/brightness"
