@@ -53,7 +53,8 @@
 
 [color]
   # I like colors.
-  ui = always
+  # always here messes with git add -p and a bunch of other stuff. dunno why
+  ui = auto
 
 [commit]
   # Always sign commits.
