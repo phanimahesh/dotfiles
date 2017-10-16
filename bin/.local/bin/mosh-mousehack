@@ -7,7 +7,7 @@
 perl -E ' print "\e[?1005h\e[?1002h" '
 
 # run mosh
-/usr/local/bin/mosh "$@" 
+/usr/bin/mosh "$@" 
 
 # reset the terminal after mosh exits, to undo mouse forwarding effects.
 reset
