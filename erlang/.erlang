@@ -1,0 +1,1 @@
+code:load_abs(os:getenv("XDG_CONFIG_HOME", os:getenv("HOME") ++ "/.config") ++ "/erlang/user_default").
