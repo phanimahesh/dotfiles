@@ -57,8 +57,7 @@
   ui = auto
 
 [commit]
-  # Always sign commits.
-  gpgsign = true
+  gpgsign = false
 
 [core]
   excludesfile = ~/.gitignore_global
