@@ -18,6 +18,8 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     erlang
+     elixir
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -251,6 +253,11 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place you code here."
+
+  ;; Erlang mode indentation
+  (setq erlang-indent-level 2)
+  (setq erlang-indent-guard 2)
+  (setq erlang-argument-indent nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
