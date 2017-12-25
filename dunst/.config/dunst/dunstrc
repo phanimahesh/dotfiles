@@ -1,0 +1,63 @@
+[global]
+    alignment = left
+    allow_markup = yes
+    bounce_freq = 0
+    follow = none
+    font = Monospace 12
+    # font = Terminus (TTF) 12
+    format = "<b>%a: %s</b>\n%b %p"
+    # geometry [{width}]x{height}][+/-{x}+/-{y}]
+    geometry = "0-30+20"
+    history_length = 50
+    horizontal_padding = 8
+    idle_threshold = 60
+    ignore_newline = no
+    indicate_hidden = yes
+    line_height = 0
+    monitor = 0
+    padding = 5
+    separator_color = frame
+    separator_height = 1
+    show_age_threshold = 60
+    show_indicators = yes
+    shrink = no
+    sort = yes
+    startup_notification = false
+    sticky_history = yes
+    transparency = 0
+    word_wrap = yes
+
+    # Define the title and class of the windows spawned by dunst
+    title = Dunst
+    class = Dunst
+    # Always run rule-defined scripts, even if the notification is suppressed
+    always_run_script = true
+
+[frame]
+    color = "#aaaaaa"
+    width = 3
+
+[shortcuts]
+    close = mod4+m
+    close_all = mod4+shift+m
+    history = mod4+n
+    context = mod4+shift+i
+
+[urgency_low]
+    # IMPORTANT: colors have to be defined in quotation marks.
+    # Otherwise the '#' and following  would be interpreted as a comment.
+    background = "#222222"
+    foreground = "#aaaaaa"
+    timeout = 10
+
+[urgency_normal]
+    background = "#285577"
+    foreground = "#ffffff"
+    timeout = 10
+
+[urgency_critical]
+    background = "#900000"
+    foreground = "#ffffff"
+    timeout = 0
+    frame_color = "#c61616"
+
