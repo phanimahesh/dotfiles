@@ -516,7 +516,7 @@ if has("nvim")
   let test#strategy = "neoterm"
 
   " vertical split instead of the default horizontal
-  let g:neoterm_position = "vertical"
+  let g:neoterm_default_mod = ":vertical"
 
   """ Terminal settings {{{
   " I keep forgetting the terminal escape sequence. Also, leader escape is nicer.
