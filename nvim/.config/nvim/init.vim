@@ -82,7 +82,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/neopairs.vim'
 Plug 'Konfekt/FastFold'
 Plug 'Shougo/context_filetype.vim'
-let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 0
 let g:deoplete#sources = {}
 let g:deoplete#ignore_sources = {}
 let g:deoplete#keyword_patterns = {}
