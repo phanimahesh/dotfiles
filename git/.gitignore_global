@@ -126,3 +126,4 @@ flycheck_*.el
 *.orig
 # Autoenv
 .autoenv.zsh
+.tool-versions

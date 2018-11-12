@@ -41,10 +41,12 @@
   # Credit an author on the latest commit
   credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
   list-files-in-commit = "!f(){ git diff-tree --no-commit-id --name-only -r ${1:-HEAD}; }; f"
+  alias = "!f() { git config \"alias.$1\"; }; f"
+  reset-file = checkout HEAD --
 
 
 [branch]
-  autosetupmerge = always
+  autosetupmerge = true
   autosetuprebase = always
 
 [clean]
@@ -147,3 +149,5 @@
   name = J Phani Mahesh
   email = code@phanimahesh.me
   signingkey = F908740519D2751B
+[github]
+	user = phanimahesh
