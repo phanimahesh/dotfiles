@@ -90,13 +90,14 @@ let g:deoplete#keyword_patterns = {}
 " Completion sources for Deoplete {{{
 Plug 'Shougo/neco-vim'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'SevereOverfl0w/deoplete-github'
-let g:deoplete#sources.gitcommit=['github']
-let g:deoplete#keyword_patterns.gitcommit = '.+'
+" Plug 'SevereOverfl0w/deoplete-github'
+" let g:deoplete#sources.gitcommit=['github']
+" let g:deoplete#keyword_patterns.gitcommit = '.+'
 
-autocmd! User deoplete-github call deoplete#util#set_pattern(
-  \ g:deoplete#omni#input_patterns,
-  \ 'gitcommit', [g:deoplete#keyword_patterns.gitcommit])
+" autocmd! User deoplete-github call deoplete#util#set_pattern(
+"   \ g:deoplete#omni#input_patterns,
+"   \ 'gitcommit', [g:deoplete#keyword_patterns.gitcommit])
+
 " End Completion sources}}}
 "
 " End Deoplete }}}
