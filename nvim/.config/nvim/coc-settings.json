@@ -1,0 +1,43 @@
+{
+  "suggest.triggerAfterInsertEnter": true,
+  "suggest.snippetIndicator": "►",
+  "suggest.enablePreview": true,
+  "suggest.echodocSupport": true,
+  "suggest.acceptSuggestionOnCommitCharacter": true,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextPrefix": "⚠ ",
+  "codeLens.enable": true,
+  "coc.preferences.formatOnSaveFiletypes": ["dart"],
+  "coc.preferences.formatOnType": true,
+
+  "languageserver": {
+    "dart": {
+      "command": "/home/jpm/playground/flutter/flutter/bin/cache/dart-sdk/bin/dart",
+      "args": [
+        "/home/jpm/playground/flutter/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot",
+        "--lsp"
+      ],
+      "filetypes": ["dart"],
+      "disableDynamicRegister": true,
+      "trace.server":"verbose"
+    },
+    "haskell": {
+      "command": "hie-wrapper",
+      "rootPatterns": [
+        ".stack.yaml",
+        "cabal.config",
+        "package.yaml"
+      ],
+      "filetypes": [
+        "hs",
+        "lhs",
+        "haskell"
+      ],
+      "initializationOptions": {
+        "languageServerHaskell": {
+        }
+      }
+    }
+  }
+}
