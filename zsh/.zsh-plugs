@@ -40,3 +40,4 @@ zplug "BurntSushi/ripgrep", \
   rename-to:rg
 zplug "BurntSushi/xsv", from:gh-r, as:command
 zplug "github/hub", from:gh-r, as:command
+# zplug "paulmelnikow/zsh-startup-timer"
