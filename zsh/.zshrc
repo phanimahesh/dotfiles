@@ -181,5 +181,8 @@ preexec_functions+=(_set_title_preexec)
 # Dart stuff for dart language server for flutter
 export PATH=$PATH:/usr/lib/dart/bin:$HOME/.pub-cache/bin
 
+# Hook for desk activation
+[ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
+
 autoload zrecompile
 zrecompile -p -R ~/.zshrc
