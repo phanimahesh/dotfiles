@@ -4,7 +4,7 @@ REPORTTIME=5
 ZPLUG_LOADFILE=$HOME/.zsh-plugs
 source $HOME/.zplug/init.zsh
 # Prefer shallow clones for zplug managed repos.
-zstyle ":zplug:tag" depth 1
+zstyle ":zplug:tag" depth 10
 # Install plugins if there are plugins that have not been installed
 if ! zplug check; then
   # This weird hack is to prevent a message when some plugins are skipped
@@ -25,7 +25,7 @@ setopt interactivecomments
 # Save history. zsh doesn't unless this is set
 HISTFILE=$HOME/.zsh_history
 # Larger history
-HISTSIZE=50000000;
+HISTSIZE=500000;
 SAVEHIST=$HISTSIZE;
 # Make some commands not show up in history
 HISTIGNORE=" *:ls:ls *:cd:cd -:pwd:exit:date:* --help:* -h:man *:hledger *:ledger *";
@@ -42,9 +42,26 @@ setopt hist_verify
 setopt share_history
 
 export LSCOLORS=Gxfxcxdxbxegedabagacad
+eval "$(dircolors -b)"
 
-zstyle ':completion:*' completer _complete
+# compinit slows down startup significantly. dunno why.
+# autoload -Uz compinit && compinit
+
+zstyle ":completion:*" auto-description "specify: %d"
+zstyle ':completion:*' completer _complete _correct _approximate
+zstyle ":completion:*" format "Completing %d"
+zstyle ":completion:*" group-name ""
+zstyle ":completion:*" menu select
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
+zstyle ":completion:*" list-colors ""
+zstyle ":completion:*" list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ":completion:*" matcher-list "" "m:{a-z}={A-Z}" "m:{a-zA-Z}={A-Za-z}" "r:|[._-]=* r:|=* l:|=*"
+zstyle ":completion:*" select-prompt %SScrolling active: current selection at %p%s
+zstyle ":completion:*" verbose true
+
+zstyle ":completion:*:*:kill:*:processes" list-colors "=(#b) #([0-9]#)*=0=01;31"
+zstyle ":completion:*:kill:*" command "ps -u $USER -o pid,%cpu,tty,cputime,cmd"
 
 setopt menu_complete   # autoselect the first completion entry
 setopt auto_menu         # show completion menu on succesive tab press
@@ -57,7 +74,7 @@ zstyle ':completion:*:*:*:*:*' menu select
 # colorize ls tab-completion menu
 zstyle ':completion:*' list-colors ''
 
-# Allow space to accept a dir and show completion menu for
+# Allow ctrl-o to accept a dir and show completion menu for
 # entries in that dir.
 bindkey -M menuselect '^o' accept-and-infer-next-history
 # Cache completions
@@ -115,6 +132,12 @@ bindkey '^[[1;5D' backward-word                       # [Ctrl-LeftArrow] - move 
 if [[ "${terminfo[kcbt]}" != "" ]]; then
   bindkey "${terminfo[kcbt]}" reverse-menu-complete   # [Shift-Tab] - move through the completion menu backwards
 fi
+
+# Make ctrl-x ctrl-e edit the current command line
+autoload edit-command-line
+zle -N edit-command-line
+bindkey "^x^e" edit-command-line
+
 export LANG=en_US.UTF-8
 
 alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
@@ -123,16 +146,40 @@ alias l='ls -lah'
 alias la='ls -lAh'
 alias ll='ls -lh'
 alias ls='ls --color=tty'
-alias please=sudo
+alias please='sudo '
 alias sudo='sudo '
 alias vim=nvim
 alias vimagit='vim +MagitOnly'
 
-# Add completions to stuff from nix
-fpath=($HOME/.nix-profile/share/zsh/site-functions $fpath)
-autoload -U compinit && compinit
+# Add local functions
+fpath=($HOME/.zfunctions $fpath)
 
-# Source adsf if it exists
-if [ -f $HOME/.asdf/asdf.sh ]; then
-  source $HOME/.asdf/asdf.sh
-fi
+function source-if-exists () {
+  test -r "$1" && source "$1" > /dev/null 2>/dev/null || true
+}
+
+source-if-exists $HOME/.opam/opam-init/init.zsh
+source-if-exists $HOME/.asdf/asdf.sh
+# Requires apt install autojump
+source-if-exists /usr/share/autojump/autojump.sh
+
+# Synamic terminal title {{{
+# Write some info to terminal title.
+# This is seen when the shell prompts for input.
+function _set_title_precmd {
+  print -Pn "\e]0;zsh%L %(1j,%j job%(2j|s|); ,)%~\a"
+}
+# Write command and args to terminal title.
+# This is seen while the shell waits for a command to complete.
+function _set_title_preexec {
+  printf "\033]0;%s\a" "$1"
+}
+precmd_functions+=(_set_title_precmd)
+preexec_functions+=(_set_title_preexec)
+# }}}
+
+# Dart stuff for dart language server for flutter
+export PATH=$PATH:/usr/lib/dart/bin:$HOME/.pub-cache/bin
+
+autoload zrecompile
+zrecompile -p -R ~/.zshrc
