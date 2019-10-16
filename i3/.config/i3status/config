@@ -11,7 +11,7 @@ general {
         interval = 5
 }
 
-order += "disk /nix"
+# order += "disk /nix"
 order += "disk /home"
 # order += "run_watch VPN"
 # order += "run_watch DHCP"
