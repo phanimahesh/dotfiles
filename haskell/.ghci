@@ -1,1 +1,47 @@
+-- Turn off output for resource usage and types.  This is to reduce verbosity when reloading this file.
+:unset +s +t
+-- +t is set again at end of file
+
+-- Allow multiline input without having to :{ ... :}
+-- Remove verbosity
+:set +m -v0
+
+-- Turn off all compiler warnings and turn on OverloadedStrings for interactive input.
+:seti -w -XOverloadedStrings
+
+-- Customize prompts
 :set prompt "λ> "
+:set prompt-cont " λ| "
+
+-- See how types specialize
+-- λ> :set -XTypeApplications
+-- λ> :t fmap @Maybe
+-- fmap @Maybe :: (a -> b) -> Maybe a -> Maybe b
+-- λ> :t fmap @(Either _)
+-- fmap @(Either _) :: (a -> b) -> Either w a -> Either w b
+:set -XTypeApplications
+
+dotGHCI_escapeShellArg arg = "'" ++ concatMap (\c -> if c == '\'' then "'\\''" else [c]) arg ++ "'"
+:def! hoogle return . (":!hoogle -q --count=15 --color " ++) . dotGHCI_escapeShellArg
+:def! search return . (":!hoogle -q --count=3 --color " ++) . dotGHCI_escapeShellArg
+:def! doc return . (":!hoogle -q --color --info " ++) . dotGHCI_escapeShellArg
+:def! hlint \s -> return $ ":!hlint " ++ if null s then "." else s
+
+-- Quick find packages
+:def find-pkg-for-module return . (":!ghc-pkg find-module " ++) . dotGHCI_escapeShellArg
+
+-- Lambdabot stuff
+lb s1 s2 = return $ ":!lambdabot -n -e " ++ dotGHCI_escapeShellArg s1 ++ "\\ " ++ dotGHCI_escapeShellArg s2
+:def! lb lb ""                   -- runs arbitrary lambdabot commands
+:def! pl lb "pl"                 -- converts code to point-free (aka pointless) form
+:def! unpl lb "unpl"             -- converts back from point-free (aka pointless) form
+:def! do lb "do"                 -- converts binds to do notation
+:def! undo lb "undo"             -- converts do blocks to bind notation
+:def! index lb "index"           -- finds the module that defines the given identifier
+:def! instances lb "instances"   -- finds all instances of a given type class
+:def! src lb "src"               -- tries to find the source code for the given identifier
+:def! oeis lb "oeis"             -- looks up the On-Line Encyclopedia of Integer Sequences (https://oeis.org/)
+
+
+-- Turn on output of types.  This line should be last.
+:set +t
