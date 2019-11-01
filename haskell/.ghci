@@ -21,7 +21,10 @@
 -- fmap @(Either _) :: (a -> b) -> Either w a -> Either w b
 :set -XTypeApplications
 
-dotGHCI_escapeShellArg arg = "'" ++ concatMap (\c -> if c == '\'' then "'\\''" else [c]) arg ++ "'"
+let
+  dotGHCI_escapeShellArg :: String -> String
+  dotGHCI_escapeShellArg arg = "'" ++ concatMap (\c -> if c == '\'' then "'\\''" else [c]) arg ++ "'"
+
 :def! hoogle return . (":!hoogle -q --count=15 --color " ++) . dotGHCI_escapeShellArg
 :def! search return . (":!hoogle -q --count=3 --color " ++) . dotGHCI_escapeShellArg
 :def! doc return . (":!hoogle -q --color --info " ++) . dotGHCI_escapeShellArg
@@ -31,16 +34,27 @@ dotGHCI_escapeShellArg arg = "'" ++ concatMap (\c -> if c == '\'' then "'\\''" e
 :def find-pkg-for-module return . (":!ghc-pkg find-module " ++) . dotGHCI_escapeShellArg
 
 -- Lambdabot stuff
-lb s1 s2 = return $ ":!lambdabot -n -e " ++ dotGHCI_escapeShellArg s1 ++ "\\ " ++ dotGHCI_escapeShellArg s2
-:def! lb lb ""                   -- runs arbitrary lambdabot commands
-:def! pl lb "pl"                 -- converts code to point-free (aka pointless) form
-:def! unpl lb "unpl"             -- converts back from point-free (aka pointless) form
-:def! do lb "do"                 -- converts binds to do notation
-:def! undo lb "undo"             -- converts do blocks to bind notation
-:def! index lb "index"           -- finds the module that defines the given identifier
-:def! instances lb "instances"   -- finds all instances of a given type class
-:def! src lb "src"               -- tries to find the source code for the given identifier
-:def! oeis lb "oeis"             -- looks up the On-Line Encyclopedia of Integer Sequences (https://oeis.org/)
+let
+  lb s1 s2 = return $ ":!lambdabot -n -e " ++ dotGHCI_escapeShellArg s1 ++ "\\ " ++ dotGHCI_escapeShellArg s2
+
+-- runs arbitrary lambdabot commands
+:def! lb lb ""
+-- converts code to point-free (aka pointless) form
+:def! pl lb "pl"
+-- converts back from point-free (aka pointless) form
+:def! unpl lb "unpl"
+-- converts binds to do notation
+:def! do lb "do"
+-- converts do blocks to bind notation
+:def! undo lb "undo"
+-- finds the module that defines the given identifier
+:def! index lb "index"
+-- finds all instances of a given type class
+:def! instances lb "instances"
+-- tries to find the source code for the given identifier
+:def! src lb "src"
+-- looks up the On-Line Encyclopedia of Integer Sequences (https://oeis.org/)
+:def! oeis lb "oeis"
 
 
 -- Turn on output of types.  This line should be last.
