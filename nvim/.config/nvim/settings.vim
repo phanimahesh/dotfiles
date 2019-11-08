@@ -169,6 +169,7 @@ if has("nvim")
   highlight TermCursor ctermfg=red guifg=red
   " Switch terminals to insertmode on entering them.
   autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+  autocmd TermOpen * setlocal nonumber norelativenumber
 " }}}
 endif
 " Neovim specific settings }}}
