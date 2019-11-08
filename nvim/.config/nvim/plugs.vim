@@ -96,6 +96,38 @@ Plug 'kassio/neoterm'
 " cv -> paste from system clipboard
 Plug 'christoomey/vim-system-copy'
 
+" Distraction free writing
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+
+function! s:goyo_enter()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  NumbersDisable
+  Limelight
+  " ...
+endfunction
+
+function! s:goyo_leave()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
+  set showmode
+  set showcmd
+  set scrolloff=5
+  NumbersEnable
+  Limelight!
+  " ...
+endfunction
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
 " Completion {{{
 "" YouCompleteMe
 ""     The most awesome autocompleter for vim
@@ -136,6 +168,7 @@ Plug 'sheerun/vim-polyglot'
 "    Context sensitive numbering.
 "    Absolute in insert mode and relative in normal.
 Plug 'vim-scripts/numbers.vim'
+let g:numbers_exclude = ['minibufexpl', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'goyo_pad', 'fzf', 'neoterm', 'intero']
 "
 " Fugitive
 "    Interface with git from vim
