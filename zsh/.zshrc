@@ -1,6 +1,10 @@
 # Show a summary if something takes more than these many seconds 
 REPORTTIME=5
 
+# Set emacs keybindings. I'm a vimmer but emacs kbs are convenient
+# in shell.
+bindkey -e
+
 ZPLUG_LOADFILE=$HOME/.zsh-plugs
 source $HOME/.zplug/init.zsh
 # Prefer shallow clones for zplug managed repos.
@@ -95,9 +99,6 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 # ... unless we really want to.
 zstyle '*' single-ignored show
 
-# Set emacs keybindings. I'm a vimmer but emacs kbs are convenient
-# in shell.
-bindkey -e
 
 setopt auto_pushd
 setopt pushd_ignore_dups
@@ -160,6 +161,7 @@ function source-if-exists () {
 
 source-if-exists $HOME/.opam/opam-init/init.zsh
 source-if-exists $HOME/.asdf/asdf.sh
+source-if-exists $XDG_CONFIG_HOME/fzf/fzf.zsh
 # Requires apt install autojump
 source-if-exists /usr/share/autojump/autojump.sh
 
@@ -183,6 +185,9 @@ export PATH=$PATH:/usr/lib/dart/bin:$HOME/.pub-cache/bin
 
 # Hook for desk activation
 [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
+
+# Make GPG always use the current tty to prompt (in non gui environments)
+export GPG_TTY=$(tty)
 
 autoload zrecompile
 zrecompile -p -R ~/.zshrc
