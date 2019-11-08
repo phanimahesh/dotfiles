@@ -14,9 +14,10 @@ set wildmenu                  " Menu completion in command mode on <Tab>
 set wildmode=full             " <Tab> cycles between all matching choices.
 
 " Fancy new nvim 0.4 features - transparency and menu on ex-wildcomplete.
-set wildoptions=pum
-set pumblend=30
-set winblend=30
+if exists('+pumblend')
+  set pumblend=30
+  set winblend=30
+endif
 
 set mouse=a  " enable mouse"
 " don't bell or blink
