@@ -10,9 +10,6 @@ zplug "~/.nix-profile/etc/profile.d", \
   from:local, use:"*.sh", \
   if:"[ -d ~/.nix-profile ]"
 
-# This is a theme I like. Let's get it
-zplug "themes/alanpeabody", from:oh-my-zsh
-
 # Lots of contributed completions.
 zplug "zsh-users/zsh-completions"
 
@@ -40,6 +37,7 @@ zplug "BurntSushi/ripgrep", \
   rename-to:rg
 zplug "BurntSushi/xsv", from:gh-r, as:command
 zplug "github/hub", from:gh-r, as:command
+zplug "denisidoro/navi", hook-build:"scripts/install ~/.local/bin"
 zplug mafredri/zsh-async, from:github
 zplug "phanimahesh/purer", as:theme, use:pure.zsh
 # zplug "paulmelnikow/zsh-startup-timer"
