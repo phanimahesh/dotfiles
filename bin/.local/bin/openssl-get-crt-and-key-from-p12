@@ -1,0 +1,8 @@
+#!/bin/bash
+# Usage: $0 file.p12
+# Creates file.crt and file.key, stripping .p12 if exists
+# Writes to current directory.
+
+filename=$(basename $1 .p12)
+openssl pkcs12 -in "$1" -clcerts -nokeys -out "$filename.crt"
+openssl pkcs12 -in "$1" -nocerts -nodes -out "$filename.key"
