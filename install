@@ -2,6 +2,12 @@
 git submodule update --init --recursive
 for i (*(/)); do
   stow --restow \
-    --ignore=.gitignore \
     --target=$HOME $i;
 done
+
+# Install nvim as an appimage
+if ! type nvim > /dev/null 2>&1; then
+  echo 'nvim not found in $PATH. Downloading appimage to ~/.local/bin/nvim'
+  curl -sSL https://github.com/neovim/neovim/releases/download/stable/nvim.appimage --create-dirs -o ~/.local/bin/nvim
+  chmod +x ~/.local/bin/nvim
+fi
