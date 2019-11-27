@@ -11,3 +11,7 @@ if ! type nvim > /dev/null 2>&1; then
   curl -sSL https://github.com/neovim/neovim/releases/download/stable/nvim.appimage --create-dirs -o ~/.local/bin/nvim
   chmod +x ~/.local/bin/nvim
 fi
+# zsh won't pick it up until next run if the folder was created by curl above
+export PATH=$PATH:~/.local/bin
+# Automatically install all plugins
+nvim +PlugInstall +qa
