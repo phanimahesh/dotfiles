@@ -10,3 +10,6 @@
   ; When zplug manages itself init.zsh is turned into a symlink
   ; This is okay. I don't want git telling me something changed
   ignore = dirty
+[submodule "asdf/.asdf"]
+	path = asdf/.asdf
+	url = https://github.com/asdf-vm/asdf.git
