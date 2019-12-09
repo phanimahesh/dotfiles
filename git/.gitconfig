@@ -60,6 +60,7 @@
 
 [commit]
   gpgsign = false
+  verbose = true
 
 [core]
   excludesfile = ~/.gitignore_global
