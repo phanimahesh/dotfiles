@@ -22,6 +22,7 @@ zplug "zsh-users/zsh-completions"
 zplug "Tarrasch/zsh-autoenv"
 
 zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "RobSis/zsh-completion-generator"
 zplug "stedolan/jq", \
