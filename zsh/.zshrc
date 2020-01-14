@@ -46,7 +46,7 @@ setopt hist_verify
 setopt share_history
 
 export LSCOLORS=Gxfxcxdxbxegedabagacad
-eval "$(dircolors -b)"
+command -v dircolors >/dev/null 2>&1 && eval "$(dircolors -b)"
 
 # compinit slows down startup significantly. dunno why.
 # autoload -Uz compinit && compinit
@@ -192,6 +192,13 @@ export PATH=$PATH:/usr/lib/dart/bin:$HOME/.pub-cache/bin
 
 # Make GPG always use the current tty to prompt (in non gui environments)
 export GPG_TTY=$(tty)
+
+# OS Specific optional overrides
+# .zshrc-Darwin for osx
+# .zshrc-Linux for linux
+source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc-`uname`"
+# Unversioned local overrides
+source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc.local"
 
 autoload zrecompile
 zrecompile -p -R ~/.zshrc

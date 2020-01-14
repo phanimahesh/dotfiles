@@ -1,0 +1,5 @@
+for i (coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep); do
+ export PATH="$(brew --prefix)/opt/${i}/libexec/gnubin:$PATH"
+done
+unset i
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
