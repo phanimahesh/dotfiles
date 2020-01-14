@@ -165,7 +165,7 @@ function source-if-exists () {
 
 source-if-exists $HOME/.opam/opam-init/init.zsh
 source-if-exists $HOME/.asdf/asdf.sh
-source-if-exists $XDG_CONFIG_HOME/fzf/fzf.zsh
+source-if-exists ${XDG_CONFIG_HOME:=~/.config}/fzf/fzf.zsh
 # Requires apt install autojump
 source-if-exists /usr/share/autojump/autojump.sh
 
