@@ -2,4 +2,8 @@ for i (coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt gre
  export PATH="$(brew --prefix)/opt/${i}/libexec/gnubin:$PATH"
 done
 unset i
+
+# Get tex on path. Installed with brew cask install basictex
+export PATH="/usr/local/texlive/2019basic/bin/x86_64-darwin/:$PATH"
+
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
