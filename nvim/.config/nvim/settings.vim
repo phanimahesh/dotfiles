@@ -42,7 +42,7 @@ autocmd WinLeave * set nocursorline nocursorcolumn
 autocmd WinEnter * set cursorline cursorcolumn
 set cursorline cursorcolumn
 
-set synmaxcol=200           " Do not highlight after 120 columns.
+set synmaxcol=350           " Do not highlight after 350 columns. Large value because codebases. _Sigh._
 set ruler                   " show the cursor position all the time
 set nostartofline           " Avoid moving cursor to BOL when jumping around
 set virtualedit=block       " Let cursor move past the last char in <C-v> mode

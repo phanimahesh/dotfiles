@@ -67,6 +67,11 @@
         "languageServerHaskell": {
         }
       }
+    },
+    "kotlin": {
+      "command": "/home/jpm/github/fwcd/kotlin-language-server/server/build/install/server/bin/kotlin-language-server",
+      "filetypes": ["kotlin"],
+      "rootPatterns": [".git", "pom.xml"]
     }
   }
 }
