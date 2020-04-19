@@ -157,6 +157,10 @@ if type nvim > /dev/null 2>&1; then
 fi
 alias vimagit='vim +MagitOnly'
 
+if type bat > /dev/null 2>&1; then
+  alias cat=bat
+fi
+
 # Add local functions
 fpath=($HOME/.zfunctions $fpath)
 
