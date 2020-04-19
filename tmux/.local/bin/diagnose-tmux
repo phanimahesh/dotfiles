@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+set -xe
+
+echo $TERM
+infocmp $TERM
+
+infocmp tmux-256color
+echo "If tmux-256color is not recognized apt install ncurses-term"
+
