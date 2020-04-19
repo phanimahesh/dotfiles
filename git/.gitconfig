@@ -43,6 +43,8 @@
   list-files-in-commit = "!f(){ git diff-tree --no-commit-id --name-only -r ${1:-HEAD}; }; f"
   alias = "!f() { git config \"alias.$1\"; }; f"
   reset-file = checkout HEAD --
+  log-fuller = log --pretty=fuller
+  log-compact = log --pretty=\"format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%Cred%d %Creset%s\" --date=relative
 
 
 [branch]
