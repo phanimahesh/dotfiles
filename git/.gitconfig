@@ -34,7 +34,7 @@
   branches = branch -a
   remotes = remote -v
   # Cleanup merged branches
-  cleanup-merged =  "!git branch --no-color --merged | grep -v '*' | xargs -p git branch -d"
+  cleanup-merged =  "!git branch --no-color --merged | grep -v '*' | xargs --interactive --no-run-if-empty git branch -d"
   # Open github url with exact commit referenced by $1, head by default.
   # Stolen from http://codeinthehole.com/writing/linking-to-github/
   gh-url = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -u -- commit/$sha; }; f"
