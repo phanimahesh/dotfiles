@@ -1,8 +1,10 @@
 {
+  allowUnfree = true;
   packageOverrides = pkgs: with pkgs; rec {
     myProfile = writeText "my-nix-custom-profile" ''
-      export PATH=$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/sbin:/bin:/usr/sbin:/usr/bin
-      export MANPATH=$HOME/.nix-profile/share/man:/nix/var/nix/profiles/default/share/man:/usr/share/man
+      # Already handled by zplug
+      # export PATH=$PATH:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin
+      # export MANPATH=$MANPATH:$HOME/.nix-profile/share/man:/nix/var/nix/profiles/default/share/man
     '';
     myPackages = pkgs.buildEnv {
       name = "my-packages";
@@ -14,12 +16,14 @@
         jq
         neomutt
         ripgrep
+        skim
         universal-ctags
         entr
         bat
         fd
         taskwarrior
         timewarrior
+        vit
         tealdeer
         fpp
         autojump
