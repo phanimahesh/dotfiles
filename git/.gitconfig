@@ -148,9 +148,12 @@
 # }}}
 
 # User info
-[user]
-  name = J Phani Mahesh
-  email = code@phanimahesh.me
-  signingkey = F908740519D2751B
+[include]
+  path = ~/.config/git/personal.conf
+
+# For any repo under this dir, use udaan config
+[includeIf "gitdir:~/github/udaan-com/"]
+  path = ~/.config/git/udaan.conf
+
 [github]
 	user = phanimahesh
