@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Source: https://github.com/not-an-aardvark/git-delete-squashed
+
+set -e
+
+TARGET_REF=${1-master}
+
+git checkout -q $TARGET_REF
+git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do
+  mergeBase=$(git merge-base $TARGET_REF $branch) && \
+  [[ $(git cherry $TARGET_REF $(git commit-tree $(git rev-parse $branch\^{tree}) -p $mergeBase -m _)) == "-"* ]] && \
+  git branch -D $branch
+done
