@@ -25,20 +25,6 @@ zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "RobSis/zsh-completion-generator"
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
-zplug "ericchiang/pup", \
-  from:gh-r, \
-  as:command
-zplug "BurntSushi/ripgrep", \
-  from:gh-r, \
-  as:command, \
-  rename-to:rg
-zplug "BurntSushi/xsv", from:gh-r, as:command
-zplug "github/hub", from:gh-r, as:command
-zplug "borgbackup/borg", from:gh-r, as:command, rename-to:borg
 zplug "denisidoro/navi", hook-build:"scripts/install ~/.local/bin"
 zplug mafredri/zsh-async, from:github
 zplug "phanimahesh/purer", as:theme, use:pure.zsh
