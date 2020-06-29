@@ -17,6 +17,7 @@
         neomutt
         ripgrep
         skim
+        stern
         universal-ctags
         entr
         bat
