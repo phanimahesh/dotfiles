@@ -1,0 +1,5 @@
+--exclude=.git
+--exclude=vendor/*
+--exclude=node_modules/*
+--exclude=target/*
+--exclude=log/*
