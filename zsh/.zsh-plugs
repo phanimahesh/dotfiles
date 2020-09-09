@@ -27,6 +27,7 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "RobSis/zsh-completion-generator"
 zplug "denisidoro/navi", hook-build:"scripts/install ~/.local/bin"
 zplug mafredri/zsh-async, from:github
-zplug "phanimahesh/purer", as:theme, use:pure.zsh
+# zplug "phanimahesh/purer", as:theme, use:pure.zsh
+zplug romkatv/powerlevel10k, as:theme, depth:1
 # zplug "paulmelnikow/zsh-startup-timer"
 zplug "zsh-users/zaw"
