@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# List all active PRs, and for each of them, list changes in the PR
+hub pr list -f "%I%n" | while read -n pr; do echo "Inspecting PR #$pr"; hub pr checkout $pr; git diff --name-status origin/master HEAD; done
