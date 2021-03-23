@@ -43,6 +43,8 @@
         taskwarrior
         # Time tracking tool
         timewarrior
+        # task warrior shell
+        tasksh
         # Visual interface to taskwarrior
         vit
         # Github's wrapper for git
