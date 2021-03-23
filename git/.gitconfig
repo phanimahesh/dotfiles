@@ -157,3 +157,5 @@
 
 [github]
 	user = phanimahesh
+[stash]
+	showPatch = true
