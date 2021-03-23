@@ -1,0 +1,39 @@
+#!/bin/bash
+ID="$(xprop -root _NET_ACTIVE_WINDOW | cut -d' ' -f5)"
+CLASS=$(xprop -id $ID WM_CLASS | cut -d'"' -f2)
+NAME=$(xprop -id $ID WM_NAME | cut -d'"' -f2)
+
+CFG=$(mktemp)
+echo "# Choose command or define your own" >> $CFG
+echo "#COMMAND=kill" >> $CFG
+echo "#COMMAND='move window to workspace \$ws'" >> $CFG
+echo "#COMMAND='floating enable'" >> $CFG
+echo "# Remove properties you do not want to create rule for" >> $CFG
+echo "WM_CLASS='${CLASS}'" >> $CFG
+echo "WM_NAME='${NAME}'" >> $CFG
+vim $CFG
+source $CFG
+RULE="for_window ["
+if [ "$WM_CLASS" != "" ]; then
+    RULE="$RULE class=\"^$WM_CLASS\$\""
+fi
+if [ "$WM_NAME" != "" ]; then
+    RULE="$RULE title=\"^$WM_NAME\$\""
+fi
+RULE="$RULE] $COMMAND"
+CFG=$(mktemp)
+echo "#Is it right? Modify the rule or delete it to abort." >> $CFG
+echo "i3rule='$RULE'" >> $CFG
+vim $CFG
+source $CFG
+if [ "$i3rule" = "" ]; then
+    echo "Aborted."
+    exit
+fi
+echo "Backing up i3 config as config.backup"
+cp -f ~/.config/i3/config ~/.config/i3/config.backup
+echo "Adding rule: $i3rule"
+CMD='sed -i '"'"'s/#$GENERATED_RULES$#/#$GENERATED_RULES$#\n'"$i3rule"'/g;'"'"' ~/.config/i3/config'
+#echo "$CMD"
+eval $CMD
+echo "Done."
