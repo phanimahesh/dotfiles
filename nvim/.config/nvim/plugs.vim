@@ -194,7 +194,7 @@ Plug 'airblade/vim-rooter'
 let g:rooter_disable_map = 1
 " let g:rooter_manual_only = 1
 let g:rooter_silent_chdir = 1
-let g:rooter_use_lcd = 1
+let g:rooter_cd_cmd="lcd"
 let g:rooter_resolve_links = 1
 let g:rooter_change_directory_for_non_project_files = 0
 let g:rooter_patterns = [ 'Cargo.toml', 'mix.exs', 'package.json', '.git', '.git/', '.hg/' ]
@@ -350,6 +350,7 @@ Plug 'tpope/vim-obsession'
 Plug 'garbas/vim-snipmate'
 Plug 'honza/vim-snippets'
 Plug 'scrooloose/snipmate-snippets'
+let g:snipMate = { 'snippet_version' : 1 }
 "
 " Surround
 "    Allows you to surround text with open/close tags
@@ -415,6 +416,14 @@ Plug 'slashmili/alchemist.vim', {'for': 'elixir'}
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'lucidstack/hex.vim'
 
+Plug 'subnut/nvim-ghost.nvim', {'do': ':call nvim_ghost#installer#install()'}
+
+Plug 'tpope/vim-dispatch'
+" Only in Neovim:
+Plug 'radenling/vim-dispatch-neovim'
+
+Plug 'clojure-vim/vim-jack-in', {'on': ['Clj', 'Lein']}
+Plug 'Olical/conjure', {'for': 'clojure'}
 
 Plug 'jceb/vim-orgmode'
 
