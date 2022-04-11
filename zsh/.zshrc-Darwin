@@ -1,7 +1,13 @@
-for i (coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep); do
- export PATH="$(brew --prefix)/opt/${i}/libexec/gnubin:$PATH"
-done
-unset i
+# Add non g-prefixed gnu tools and make them take priority over mac os's bsd tools.
+if type brew &>/dev/null; then
+    HOMEBREW_PREFIX=$(brew --prefix)
+    for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnubin; do export PATH=$d:$PATH; done
+    for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnuman; do export MANPATH=$d:$MANPATH; done
+    unset d
+fi
+
+# Add python user installed packages to PATH
+for d in $HOME/Library/Python/*/bin; do export PATH=$PATH:$d; done
 
 # Get tex on path. Installed with brew cask install basictex
 export PATH="/usr/local/texlive/2019basic/bin/x86_64-darwin/:$PATH"
