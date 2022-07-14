@@ -65,7 +65,10 @@
   verbose = true
 
 [core]
+  pager = delta
   trustctime = false
+  excludesFile = ~/.config/git/ignore
+  autocrlf = input
 
 [diff]
   submodule = log
@@ -81,6 +84,34 @@
 [http]
   # Prevent problems with http transport by using large buffer
   postBuffer = 524288000
+
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+
+[add.interactive]
+  useBuiltin = false # required for git 2.37.0
+
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  features = decorations
+
+[delta "interactive"]
+  keep-plus-minus-markers = false
+  side-by-side = true
+
+[delta "decorations"]
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
+  
+
+[diff]
+  colorMoved = default
 
 [merge]
   conflictstyle = diff3
@@ -150,11 +181,15 @@
 [include]
   path = ~/.config/git/personal.conf
 
-# For any repo under this dir, use udaan config
-[includeIf "gitdir:~/github/udaan-com/"]
-  path = ~/.config/git/udaan.conf
+# For any repo under this dir, use this config
+[includeIf "gitdir:~/workspace/navi/"]
+  path = ~/.config/git/navi.conf
 
 [github]
 	user = phanimahesh
 [stash]
 	showPatch = true
+[init]
+	defaultBranch = master
+[advice]
+	skippedCherryPicks = false
