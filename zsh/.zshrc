@@ -153,22 +153,10 @@ alias history='fc -il 1'
 alias l='ls -lah'
 alias la='ls -lAh'
 alias ll='ls -lh'
-alias ls='ls --color=tty'
+# alias ls='ls --color=tty'
 alias please='sudo '
 alias sudo='sudo '
 
-# Alias vim to nvim if exists
-if type nvim > /dev/null 2>&1; then
-  alias vim=nvim
-fi
-alias vimagit='vim +MagitOnly'
-
-if type trash > /dev/null 2>&1; then
-  alias rm='trash'
-fi
-if type bat > /dev/null 2>&1; then
-  alias cat=bat
-fi
 
 # Add local functions
 fpath=($HOME/.zfunctions $fpath)
@@ -179,9 +167,12 @@ function source-if-exists () {
 
 source-if-exists $HOME/.opam/opam-init/init.zsh
 source-if-exists $HOME/.asdf/asdf.sh
+source-if-exists $HOME/.sdkman/bin/sdkman-init.sh
 source-if-exists ${XDG_CONFIG_HOME:=~/.config}/fzf/fzf.zsh
-# Requires apt install autojump
+# Requires apt install autojump or brew install autojump
 source-if-exists /usr/share/autojump/autojump.sh
+source-if-exists /usr/local/etc/profile.d/autojump.sh
+source-if-exists $HOME/.config/broot/launcher/bash/br
 
 # Synamic terminal title {{{
 # Write some info to terminal title.
@@ -219,3 +210,22 @@ zrecompile -p -R ~/.zshrc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Alias vim to nvim if exists
+if type nvim > /dev/null 2>&1; then
+  alias vim=nvim
+fi
+alias vimagit='vim +MagitOnly'
+
+if type trash > /dev/null 2>&1; then
+  alias rm='trash'
+fi
+if type bat > /dev/null 2>&1; then
+  alias cat=bat
+fi
+if type mvnd > /dev/null 2>&1; then
+  alias mvn=mvnd
+fi
+
+export PATH="${PATH}:/usr/local/bin/navi"
+
