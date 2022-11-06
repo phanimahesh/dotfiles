@@ -1,0 +1,5 @@
+.dev
+lua/aniseed_compiled_output
+bundle
+.netrwhist
+autoload/plug.vim.old
