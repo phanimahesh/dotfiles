@@ -3,7 +3,7 @@
     markup = yes
     bounce_freq = 0
     follow = none
-    font = Noto Sans 12
+    font = Noto Sans 10
     # font = Terminus (TTF) 12
     format = "<big><span font_style="oblique">%a:</span> %s %p</big>\n%b"
     # geometry [{width}]x{height}][+/-{x}+/-{y}]
@@ -49,7 +49,7 @@
     # dunst will attempt to calculate an appropriate dpi value for each monitor
     # using the resolution and physical size. This might be useful in setups
     # where there are multiple screens with very different dpi values.
-    per_monitor_dpi = false
+    per_monitor_dpi = true
 
 [shortcuts]
     close = mod4+mod1+comma
