@@ -40,4 +40,5 @@
                                                       {:key :h :cb (tree-cb :close_node)}
                                                       {:key :v :cb (tree-cb :vsplit)}]}}}))
         (util.lnnoremap :e "NvimTreeToggle")
+        (util.nnoremap "<F2>" "NvimTreeToggle")
         ))))

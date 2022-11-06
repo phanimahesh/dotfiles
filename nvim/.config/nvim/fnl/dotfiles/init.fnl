@@ -96,7 +96,6 @@
 ;;   ; :w0rp/ale {:mod :ale}
 ;;   :akinsho/toggleterm.nvim {}
 ;;   :ahmedkhalf/project.nvim {}
-;;   :nvim-treesitter/nvim-treesitter {}
 ;; 
 ;; 
    ; -- cmp plugins
