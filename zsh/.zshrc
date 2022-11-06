@@ -205,8 +205,13 @@ source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc-`uname`"
 # Unversioned local overrides
 source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc.local"
 
-autoload zrecompile
-zrecompile -p -R ~/.zshrc
+# Nix
+fpath=($HOME/.nix-profile/share/zsh/site-functions $fpath)
+
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -229,3 +234,5 @@ fi
 
 export PATH="${PATH}:/usr/local/bin/navi"
 
+autoload zrecompile
+zrecompile -p -R ~/.zshrc
