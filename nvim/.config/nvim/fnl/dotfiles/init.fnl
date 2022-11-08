@@ -53,9 +53,9 @@
   :airblade/vim-gitgutter {}
 
 ;;   ;; Installer for Language servers, Linters, Debug Adapters
-;;   :williamboman/mason.nvim {:mod :mason} ; generic installer for language servers, dap, etc
-;;   :williamboman/mason-lspconfig.nvim {} ; language server installer
-;;   :neovim/nvim-lspconfig {:mod :lspconfig}
+  :williamboman/mason.nvim {:mod :mason} ; generic installer for language servers, dap, etc
+  :williamboman/mason-lspconfig.nvim {:mod :mason-lspconfig} ; language server installer
+  :neovim/nvim-lspconfig {:mod :lspconfig}
 
   :akinsho/bufferline.nvim {}
 
@@ -64,7 +64,7 @@
   
   ;; Treesitter is a generic language parser and
   ;; this plugin provides good highlighting indentation, folding etc
-  :nvim-treesitter/nvim-treesitter {:mod :treesitter}
+  :nvim-treesitter/nvim-treesitter {:mod :treesitter :run :TSUpdate}
   ;; Enable Neovim's builtin spellchecker for buffers with tree-sitter highlighting.
   ;; Restricts spellchecking to comments so that code isn't fully red-lined
   :lewis6991/spellsitter.nvim {:mod :spellsitter}

@@ -62,6 +62,7 @@
           (let [name (. pkgs i)
                 opts (. pkgs (+ i 1))]
             (-?> (. opts :mod) (safe-require-plugin-config))
-            (use (a.assoc opts 1 name)))))))
+            (use (a.assoc opts 1 name)))))
+      {:config {:display {:open_fun (. (require :packer.util) :float)}}}))
 
   nil)
