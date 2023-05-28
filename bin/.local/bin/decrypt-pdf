@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 0 ]]; then
+  echo "Usage: $0 input.pdf [output.pdf]"
+  exit 1
+fi
+
+INPUT=$1
+OUTPUT=${2:-${INPUT%%.pdf}.decrypted.pdf}
+
+if type pdftk > /dev/null; then
+  pdftk $INPUT input_pw output $OUTPUT do_ask
+elif type qpdf > /dev/null; then
+  read -s -p "Enter Password: " PASS
+  qpdf -password=$PASS -decrypt $INPUT $OUTPUT
+else
+  echo "No supported utility found. Please install pdftk or qpdf"
+fi
+
+#vim: set ts=2 sw=2 et:
