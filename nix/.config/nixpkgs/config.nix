@@ -57,6 +57,10 @@
         autojump
         # The sensible node package manager
         yarn
+	# exercism to practice stuff
+	exercism
+	# searcheable index of nix packages
+	nix-index
       ];
       extraOutputsToInstall = [ "man" "doc" ];
     };
