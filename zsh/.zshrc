@@ -205,6 +205,9 @@ source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc-`uname`"
 # Unversioned local overrides
 source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc.local"
 
+# aliases for nvim profiles as created by nvims script
+source-if-exists "${HOME}/.nvim_appnames"
+
 # Nix
 fpath=($HOME/.nix-profile/share/zsh/site-functions $fpath)
 
