@@ -1,8 +1,0 @@
-[Unit]
-Description=Update all udaan git repositories
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/home/jpm/github/udaan-com/update-all-repos 2>&1 >dev/null
