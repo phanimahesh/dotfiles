@@ -1,0 +1,27 @@
+[Unit]
+Description=borgmatic backup
+Wants=network-online.target
+After=network-online.target
+# Prevent borgmatic from running unless the machine is plugged into power. Remove this line if you
+# want to allow borgmatic to run anytime.
+ConditionACPower=true
+
+[Service]
+Type=oneshot
+
+# Lower CPU and I/O priority.
+Nice=19
+CPUSchedulingPolicy=batch
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+IOWeight=100
+
+Restart=no
+# Prevent rate limiting of borgmatic log events. If you are using an older version of systemd that
+# doesn't support this (pre-240 or so), you may have to remove this option.
+LogRateLimitIntervalSec=0
+
+# Delay start to prevent backups running during boot. Note that systemd-inhibit requires dbus and
+# dbus-user-session to be installed.
+ExecStartPre=sleep 1m
+ExecStart=systemd-inhibit --who="borgmatic" --what="sleep:shutdown" --why="Prevent interrupting scheduled backup" /home/jpm/.nix-profile/bin/borgmatic --verbosity -2 --syslog-verbosity 1

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run borgmatic backup
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=1h
+Persistent=false
+RandomizedDelaySec=10min
+
+[Install]
+WantedBy=timers.target
