@@ -26,6 +26,8 @@ font pango:Noto Sans Mono 12
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+focus_follows_mouse no
+
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
@@ -33,7 +35,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q exec i3-msg kill
 # Program launcher, filters only apps shipping with .desktop
 # requires dmenu
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu'
+bindsym $mod+d exec --no-startup-id rofi -show combi -modes "combi#filebrowser#window#run#drun#ssh#keys" -combi-modes "window#drun#run" -show-icons -matching fuzzy -sidebar-mode -pid ~/.cache/rofi.pid -replace -theme ~/.config/rofi/launchers/type-1/style-7.rasi
 
 # change focus: Use vim keybindings
 bindsym $mod+h focus left
@@ -393,7 +395,7 @@ mode "$mode_gaps_left" {
         bindsym Return mode "$mode_gaps"
         bindsym Escape mode "default"
 }
-### END ie-gaps runtime customizer }}}
+### END i3-gaps runtime customizer }}}
 
 
 
@@ -416,14 +418,21 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # Setup background. Runs feh --bg-fill <image>
 # Automatically updated by feh when I choose a new image
 exec_always --no-startup-id ~/.fehbg
+exec_always --no-startup-id ~/.screenlayout/latest.sh
+exec --no-startup-id warpd
 
-
+exec --no-startup-id /usr/lib/gsd-xsettings
+exec_always --no-startup-id gnome-power-manager
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id gnome-flashback
+
 # This is after gnome-flashback startup since it undoes these on start
 # Disable capslock and map it to Escape and control simultaneously
-exec_always --no-startup-id setxkbmap -option 'caps:ctrl_modifier'
-exec_always --no-startup-id xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
+# exec_always --no-startup-id setxkbmap -option 'caps:ctrl_modifier'
+# exec_always --no-startup-id xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
 
+# set dpms to suspend monitors after 60 sec and poweroff after 300 sec
+exec --no-startup-id xset dpms 0 60 300
 exec --no-startup-id xss-lock -- ~/.config/i3/lock.sh
 
 exec --no-startup-id dbus-send \
