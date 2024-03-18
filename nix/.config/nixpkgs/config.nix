@@ -1,10 +1,14 @@
 {
   allowUnfree = true;
+  permittedInsecurePackages = [
+                "electron-24.8.6"
+              ];
   packageOverrides = pkgs: with pkgs; rec {
     myProfile = writeText "my-nix-custom-profile" ''
       # Already handled by zplug
       # export PATH=$PATH:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin
       # export MANPATH=$MANPATH:$HOME/.nix-profile/share/man:/nix/var/nix/profiles/default/share/man
+      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
     '';
     myPackages = pkgs.buildEnv {
       name = "my-packages";
