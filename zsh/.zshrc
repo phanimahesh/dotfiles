@@ -171,6 +171,7 @@ source-if-exists $HOME/.sdkman/bin/sdkman-init.sh
 source-if-exists ${XDG_CONFIG_HOME:=~/.config}/fzf/fzf.zsh
 # Requires apt install autojump or brew install autojump
 source-if-exists /usr/share/autojump/autojump.sh
+source-if-exists /opt/homebrew/etc/profile.d/autojump.sh
 source-if-exists /usr/local/etc/profile.d/autojump.sh
 source-if-exists $HOME/.config/broot/launcher/bash/br
 
@@ -189,6 +190,8 @@ precmd_functions+=(_set_title_precmd)
 preexec_functions+=(_set_title_preexec)
 # }}}
 
+export PATH=$PATH:$HOME/.local/bin
+export PATH=/opt/homebrew/bin/:$PATH
 # Dart stuff for dart language server for flutter
 export PATH=$PATH:/usr/lib/dart/bin:$HOME/.pub-cache/bin
 

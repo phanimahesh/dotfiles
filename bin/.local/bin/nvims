@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # From https://github.com/Traap/dotfiles/blob/master/bash/bin/nvims 
 
