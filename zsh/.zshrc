@@ -55,8 +55,6 @@ setopt share_history
 export LSCOLORS=Gxfxcxdxbxegedabagacad
 command -v dircolors >/dev/null 2>&1 && eval "$(dircolors -b)"
 
-# compinit slows down startup significantly. dunno why.
-# autoload -Uz compinit && compinit
 
 zstyle ":completion:*" auto-description "specify: %d"
 zstyle ':completion:*' completer _complete _correct _approximate
@@ -158,9 +156,6 @@ alias please='sudo '
 alias sudo='sudo '
 
 
-# Add local functions
-fpath=($HOME/.zfunctions $fpath)
-
 function source-if-exists () {
   test -r "$1" && source "$1" > /dev/null 2>/dev/null || true
 }
@@ -190,30 +185,16 @@ precmd_functions+=(_set_title_precmd)
 preexec_functions+=(_set_title_preexec)
 # }}}
 
-export PATH=$PATH:$HOME/.local/bin
-export PATH=/opt/homebrew/bin/:$PATH
-# Dart stuff for dart language server for flutter
-export PATH=$PATH:/usr/lib/dart/bin:$HOME/.pub-cache/bin
-
 # Hook for desk activation
 [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
 
 # Make GPG always use the current tty to prompt (in non gui environments)
 export GPG_TTY=$(tty)
 
-# OS Specific optional overrides
-# .zshrc-Darwin for osx
-# .zshrc-Linux for linux
-source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc-`uname`"
-# Unversioned local overrides
-source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc.local"
-
 # aliases for nvim profiles as created by nvims script
 source-if-exists "${HOME}/.nvim_appnames"
 
 # Nix
-fpath=($HOME/.nix-profile/share/zsh/site-functions $fpath)
-
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi
@@ -238,7 +219,18 @@ if type mvnd > /dev/null 2>&1; then
   alias mvn=mvnd
 fi
 
-export PATH="${PATH}:/usr/local/bin/navi"
+source ~/.paths.zsh
+
+# OS Specific optional overrides
+# .zshrc-Darwin for osx
+# .zshrc-Linux for linux
+source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc-`uname`"
+# Unversioned local overrides
+source-if-exists "${ZDOTDIR:-${HOME}}/.zshrc.local"
+
+# compinit slows down startup significantly. dunno why.
+autoload -Uz compinit && compinit
 
 autoload zrecompile
+zrecompile -p -R ~/.paths.zsh
 zrecompile -p -R ~/.zshrc
