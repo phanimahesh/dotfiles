@@ -95,3 +95,4 @@ cask "visual-studio-code"
 cask "logseq"
 brew "gh"
 brew "bash" # the builtin version is horribly out of date
+brew "glow"
