@@ -1,98 +1,88 @@
 tap "clojure/tools"
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-fonts"
-tap "homebrew/core"
 tap "mvndaemon/mvnd"
 tap "wtfutil/wtfutil"
-brew "python@3.10"
 brew "asciinema"
-brew "coreutils"
-brew "asdf"
 brew "autojump"
+brew "bash" # the builtin version is horribly out of date
 brew "bat"
+brew "broot"
+brew "clojure/tools/clojure"
+brew "coreutils"
 brew "cowsay"
-# brew "exa"
+brew "csvtk"
+brew "diff-so-fancy"
+brew "difftastic"
+brew "exercism"
 brew "fd"
 brew "findutils"
 brew "gawk"
+brew "gh"
 brew "git"
+brew "git-delta"
 brew "gitui"
+brew "glow"
 brew "gnu-getopt"
 brew "gnu-indent"
 brew "gnu-sed"
 brew "gnu-tar"
-brew "guile"
-brew "unbound"
 brew "gnutls"
 brew "grep"
-brew "htop"
-brew "hub"
+brew "guile"
+brew "htop" # Fancier and better top - process viewer
+brew "hub" # Old github client - git compatible. superseded by gh
 brew "hugo"
-brew "jq"
+brew "jq" # json query tool
+brew "kcat" # cat a kafka stream
+brew "ktlint" # Kotlin code linter
 brew "librdkafka"
-brew "kcat"
-brew "ktlint"
 brew "luajit", args: ["HEAD"]
+brew "mise" # faster asdf. Multi tool multi version manager
 brew "mongosh"
-# brew "navi"
-brew "neovim"
+brew "neovim" # The better editor
 brew "nghttp2"
-brew "python@3.9"
-brew "qpdf"
-brew "ripgrep"
-brew "stow"
-brew "task"
+brew "noahgorstein/tap/jqp"
+brew "podman" # container runtime like docker
+brew "podman-compose"
+brew "python@3.10"
+brew "qpdf" # pdf munger
+brew "ripgrep" # Blasing fast search
+brew "stow" # symlink manager - useful for managing dotfiles
+brew "task" # Taskwarrior - terminal task manager
 brew "tasksh"
-brew "timewarrior"
-brew "tmate"
-brew "tmux"
+brew "timewarrior" # Terminal time tracker that works with taskwarrior
+brew "tmate" # tmux but with web and ssh tunnels via tmate.io. Server self hostable.
+brew "tmux" # Terminal multiplexer
+brew "unbound"
 brew "up"
-brew "vit"
+brew "vit" # Visual Interface for Taskwarrior
 brew "w3m"
 brew "wtfutil"
-brew "yq"
-brew "zsh"
-brew "clojure/tools/clojure"
-brew "broot"
-brew "git-delta"
-brew "diff-so-fancy"
-brew "difftastic"
-brew "exercism"
-brew "xplr"
-brew "podman"
-brew "podman-compose"
-brew "podman-desktop"
-cask "alacritty"
+brew "xplr" # Terminal File explorer
+brew "xsv" # CSV toolkit
+brew "yq" # like jq but for yaml,toml,xml,csv,json,properties,lua
+brew "zsh" # Default zsh is horribly out of date
+cask "alacritty" # Better Terminal
 cask "android-commandlinetools"
-cask "android-file-transfer"
+cask "android-file-transfer" # Needed to transfer files from android phones
 cask "android-platform-tools"
-cask "dash"
-cask "dbeaver-community"
-# cask "docker"
-# cask "dozer"
+cask "dash" # Documentation Browser.
+cask "dbeaver-community" # Database browser and query tool
 cask "emacs"
 cask "firefox"
 cask "font-fira-code-nerd-font"
 cask "font-hack-nerd-font"
 cask "font-jetbrains-mono-nerd-font"
 cask "gpg-suite"
-cask "hammerspoon"
-cask "iina"
-cask "iterm2"
-cask "keepassxc"
-# cask "kite"
-cask "kitty"
-cask "meld"
-# cask "mongodb-compass"
+cask "hammerspoon" # Lua based MacOS Automation tool
+cask "iina" # Video player
+cask "iterm2" # Better Terminal
+cask "keepassxc" # Password Manager
+cask "kitty" # Better Terminal
+cask "logseq" # Second brain - note taking tool
+cask "meld" # GUI diff viewer
+cask "podman-desktop"
 cask "postman"
-cask "raycast"
-# cask "skim"
-# cask "stretchly"
-# cask "syncthing"
-# cask "utterly"
-cask "visual-studio-code"
-cask "logseq"
-brew "gh"
-brew "bash" # the builtin version is horribly out of date
-brew "glow"
+cask "raycast" # A spotlight replacement
+cask "visual-studio-code" # Code editor from MS that's decent enough
