@@ -33,6 +33,7 @@
   tags = tag -l
   branches = branch -a
   remotes = remote -v
+  poke-ci = "!f() { git commit --allow-empty -m 'intentionally empty commit to poke ci' && git push; }; f"
   # Cleanup merged branches
   cleanup-merged =  "!git branch --no-color --merged | grep -v '*' | xargs --interactive --no-run-if-empty git branch -d"
   # Open github url with exact commit referenced by $1, head by default.
@@ -94,13 +95,16 @@
 [diff]
   tool = difftastic
 
+[difftool]
+  # prompt = false
+
 [difftool "difftastic"]
   cmd = difft "$LOCAL" "$REMOTE"
 
 [delta]
   navigate = true    # use n and N to move between diff sections
   light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-  features = decorations
+  features = interactive decorations
 
 [delta "interactive"]
   keep-plus-minus-markers = false
@@ -139,7 +143,8 @@
   trustExitCode = true
 
 [push]
-  default = upstream
+	default = current
+	autoSetupRemote = true
 
 [rerere]
   # Activate recording of resolved conflicts, so that identical conflict hunks
@@ -188,8 +193,8 @@
   path = ~/.config/git/personal.conf
 
 # For any repo under this dir, use this config
-[includeIf "gitdir:~/workspace/navi/"]
-  path = ~/.config/git/navi.conf
+[includeIf "gitdir:~/workspace/deliveroo/"]
+  path = ~/.config/git/deliveroo.conf
 
 [github]
 	user = phanimahesh
