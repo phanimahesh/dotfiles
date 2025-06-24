@@ -53,7 +53,6 @@ custom_script_sources=(
 
   # Various package managerish thingamajigs
   $HOME/.opam/opam-init/init.zsh
-  $HOME/.asdf/asdf.sh
   $HOME/.sdkman/bin/sdkman-init.sh
 
   # fzf
@@ -98,6 +97,9 @@ custom_script_sources=($^custom_script_sources(N-.))
 
 for custom_script ($custom_script_sources); do source $custom_script; done
 
+# mise is a better asdf. Multi tool version manager
+if type mise > /dev/null 2>&1; then eval "$(mise activate zsh)";fi
+
 # # Synamic terminal title {{{
 # # Write some info to terminal title.
 # # This is seen when the shell prompts for input.
@@ -119,6 +121,9 @@ for custom_script ($custom_script_sources); do source $custom_script; done
 # compinit slows down startup significantly. dunno why.
 autoload -Uz compinit && compinit
 
+eval "$(direnv hook zsh)"
+eval "$(atuin init zsh)"
+
 autoload zrecompile
-for custom_script ($custom_script_sources); do zrecompile -p -R $custom_script; done
-zrecompile -p -R $ZDOTDIR/.zshrc
+for custom_script ($custom_script_sources); do zrecompile -p -R $custom_script > /dev/null; done
+zrecompile -p -R $ZDOTDIR/.zshrc > /dev/null

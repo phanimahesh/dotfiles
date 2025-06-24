@@ -9,18 +9,18 @@
 #
 # alias      | Github repository       | default or branch name
 readonly neovim_apps=(
-  "astro     | AstroNvim/AstroNvim     | default"
-  "asyncedd  | asyncedd/dots.nvim      | default"
-  "barebones | Traap/barebones         | default"
   "default   | none                    | none"
-  "kickstart | nvim-lua/kickstart.nvim | default"
-  "nvchad    | NvChad/NvChad           | default"
-  "prime     | Traap/init.lua          | default"
-  "starter   | LazyVim/starter         | default"
-  "traap     | Traap/nvim              | default"
-  "vapour    | Traap/VapourNvim        | default"
-  "zulu      | Traap/nvim              | v0.6.8-packer"
-  "void      | nvoid-lua/nvoid         | default"
+  "nvim-astro     | AstroNvim/template      | default"
+  "nvim-asyncedd  | asyncedd/dots.nvim      | default"
+  "nvim-barebones | Traap/barebones         | default"
+  "nvim-kickstart | nvim-lua/kickstart.nvim | default"
+  "nvim-nvchad    | NvChad/starter          | default"
+  "nvim-prime     | Traap/init.lua          | default"
+  "nvim-lazyvim-starter   | LazyVim/starter         | default"
+  "nvim-traap     | Traap/nvim              | default"
+  "nvim-vapour    | Traap/VapourNvim        | default"
+  "nvim-zulu      | Traap/nvim              | v0.6.8-packer"
+  "nvim-void      | nvoid-lua/nvoid         | default"
 )
 
 # File name that is overwritten with nvim appname aliases.
@@ -203,7 +203,7 @@ writeAliasesFile() {
   echo "# NVIM_APPNAME aliases" >>"$nvimAppNameFile"
   for nvapp in "${nvapps[@]}"; do
     if [[ "default" != "$nvapp" ]]; then
-      echo alias nvim-"${nvapp,,}"=\"NVIM_APPNAME="$nvapp" nvim\" >>"$nvimAppNameFile"
+      echo alias nvim-"${nvapp,,}"=\"NVIM_APPNAME="nvim-$nvapp" nvim\" >>"$nvimAppNameFile"
     fi
   done
 }

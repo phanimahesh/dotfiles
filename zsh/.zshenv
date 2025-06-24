@@ -8,6 +8,7 @@ export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 export ZDOTDIR=${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}
 
 export EDITOR=nvim
+export NVIM_APPNAME=nvim-astro # temporary local default
 export MOSH_SERVER_NETWORK_TMOUT=604800
 export MOSH_SERVER_SIGNAL_TMOUT=60
 # sdkman is a jvm tooling manager

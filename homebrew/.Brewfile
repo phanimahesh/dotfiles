@@ -44,10 +44,12 @@ brew "neovim" # The better editor
 brew "nghttp2"
 brew "noahgorstein/tap/jqp"
 brew "podman" # container runtime like docker
+cask "docker-desktop"
 brew "podman-compose"
 brew "python@3.10"
 brew "qpdf" # pdf munger
 brew "ripgrep" # Blasing fast search
+brew "secretive" # Securely store/manage ssh keys in MacOS secure enclave"
 brew "stow" # symlink manager - useful for managing dotfiles
 brew "task" # Taskwarrior - terminal task manager
 brew "tasksh"
@@ -69,7 +71,7 @@ cask "android-file-transfer" # Needed to transfer files from android phones
 cask "android-platform-tools"
 cask "dash" # Documentation Browser.
 cask "dbeaver-community" # Database browser and query tool
-cask "emacs"
+cask "emacs-app"
 cask "firefox"
 cask "font-fira-code-nerd-font"
 cask "font-hack-nerd-font"
@@ -86,3 +88,12 @@ cask "podman-desktop"
 cask "postman"
 cask "raycast" # A spotlight replacement
 cask "visual-studio-code" # Code editor from MS that's decent enough
+
+tap "outrigdev/outrig"
+brew "outrig" # Go development helper. Debug hools, variable watches, etc
+brew "direnv"
+cask "neovide-app"
+brew "atuin"
+brew "presenterm"
+brew "watchman"
+brew "jj"
