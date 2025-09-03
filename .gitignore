@@ -2,3 +2,7 @@ pentadactyl/.pentadactyl/info
 tmux/.tmux/plugins
 tmux/.tmux/resurrect
 *.zwc
+*.zwc.old
+zsh/.config/zsh/.zcompdump
+zsh/.config/zsh/.zcompcache/
+zsh/.config/zsh/.zshrc.local
