@@ -33,7 +33,6 @@
                                                   :warning ""
                                                   :error ""}}
                             :view {:width 30
-                                   :height 30
                                    :side :left
                                    :mappings {:list [{:key {1 :l 2 :<CR> 3 :o}
                                                        :cb (tree-cb :edit)}

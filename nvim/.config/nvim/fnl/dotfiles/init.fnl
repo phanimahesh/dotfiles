@@ -6,7 +6,10 @@
 
 (set nvim.o.termguicolors true)
 (set nvim.o.mouse "a")
+
 (set nvim.o.updatetime 500)
+(set nvim.o.signcolumn :yes)
+
 (set nvim.o.timeoutlen 500)
 (set nvim.o.sessionoptions "blank,curdir,folds,help,tabpages,winsize")
 (set nvim.o.inccommand :split)
@@ -69,6 +72,8 @@
   ;; Restricts spellchecking to comments so that code isn't fully red-lined
   :lewis6991/spellsitter.nvim {:mod :spellsitter}
 
+  :simrat39/rust-tools.nvim {:mod :rust-tools}
+
 ;;   :PeterRincker/vim-argumentative {}
 ;;   :clojure-vim/clojure.vim {}
 ;;   :clojure-vim/vim-jack-in {}
@@ -104,6 +109,7 @@
    :hrsh7th/cmp-path {} ; -- path completions
    :saadparwaiz1/cmp_luasnip {} ; -- snippet completions
    :hrsh7th/cmp-nvim-lsp {} ;
+   :hrsh7th/cmp-nvim-lsp-signature-help {} ;
    :hrsh7th/cmp-nvim-lua {} ;
 ;; 
 ;; 
