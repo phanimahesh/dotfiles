@@ -125,5 +125,5 @@ eval "$(direnv hook zsh)"
 eval "$(atuin init zsh)"
 
 autoload zrecompile
-for custom_script ($custom_script_sources); do zrecompile -p -R $custom_script > /dev/null; done
-zrecompile -p -R $ZDOTDIR/.zshrc > /dev/null
+for custom_script ($custom_script_sources); do zrecompile -p -R $custom_script &>/dev/null ; done
+zrecompile -p -R $ZDOTDIR/.zshrc &>/dev/null
