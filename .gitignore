@@ -3,6 +3,6 @@ tmux/.tmux/plugins
 tmux/.tmux/resurrect
 *.zwc
 *.zwc.old
-zsh/.config/zsh/.zcompdump
-zsh/.config/zsh/.zcompcache/
+zcompdump*
+zcompcache*
 zsh/.config/zsh/.zshrc.local
