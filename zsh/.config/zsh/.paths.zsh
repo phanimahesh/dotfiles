@@ -37,6 +37,7 @@ path=(
   # Add non g-prefixed gnu tools and make them take priority over mac os's bsd tools.
   $HOMEBREW_PREFIX/opt/*/libexec/gnubin(N) # Nullglob, remove if no matches found
   /opt/homebrew/bin
+  /opt/homebrew/opt/curl/bin # Curl is not added to path since it is keg only
   # $HOME/.rvm/bin
   # /Applications/Postgres.app/Contents/MacOS/bin
   /usr/local/{sbin,bin}
