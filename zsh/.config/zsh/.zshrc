@@ -12,7 +12,7 @@ REPORTTIME=5
 # in shell.
 bindkey -e
 export ZPLUG_HOME=$HOMEBREW_PREFIX/opt/zplug
-if [ ! -d "$ZPLUG_HOME" ]; then
+if [[ ! -d "$ZPLUG_HOME" ]]; then
   export ZPLUG_HOME=$ZDOTDIR/.zplug
 fi
 ZPLUG_LOADFILE=$ZDOTDIR/.zsh-plugs
@@ -39,11 +39,16 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 
 export LSCOLORS=Gxfxcxdxbxegedabagacad
-command -v dircolors >/dev/null 2>&1 && eval "$(dircolors -b)"
 
 function source-if-exists () {
   test -r "$1" && source "$1" > /dev/null 2>/dev/null || true
 }
+
+function eval-if-command-exists () {
+  command -v "$1" >/dev/null 2>&1 && eval "$($2)" > /dev/null 2>/dev/null || true
+}
+
+eval-if-command-exists "dircolors" "dircolors -b"
 
 # Only retain unique entries, even if I accidentally duplicate
 typeset -U custom_script_sources
@@ -103,29 +108,11 @@ for custom_script ($custom_script_sources); do source $custom_script; done
 # mise is a better asdf. Multi tool version manager
 if type mise > /dev/null 2>&1; then eval "$(mise activate zsh)";fi
 
-# # Synamic terminal title {{{
-# # Write some info to terminal title.
-# # This is seen when the shell prompts for input.
-# function _set_title_precmd {
-#   print -Pn "\e]0;zsh%L %(1j,%j job%(2j|s|); ,)%~\a"
-# }
-# # Write command and args to terminal title.
-# # This is seen while the shell waits for a command to complete.
-# function _set_title_preexec {
-#   printf "\033]0;%s\a" "$1"
-# }
-# precmd_functions+=(_set_title_precmd)
-# preexec_functions+=(_set_title_preexec)
-# # }}}
-
-# Hook for desk activation
-# [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
-
 # compinit slows down startup significantly. dunno why.
 autoload -Uz compinit && compinit
 
-eval "$(direnv hook zsh)"
-eval "$(atuin init zsh)"
+eval-if-command-exists "direnv" "direnv hook zsh"
+eval-if-command-exists "atuin" "atuin init zsh"
 
 autoload zrecompile
 for custom_script ($custom_script_sources); do zrecompile -p -R $custom_script &>/dev/null ; done
