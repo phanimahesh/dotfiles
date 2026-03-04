@@ -4,12 +4,3 @@
 [submodule "emacs/.emacs.d"]
 	path = emacs/.emacs.d
   url = https://github.com/syl20bnr/spacemacs
-[submodule "zsh/.zplug"]
-	path = zsh/.zplug
-	url = https://github.com/zplug/zplug
-  ; When zplug manages itself init.zsh is turned into a symlink
-  ; This is okay. I don't want git telling me something changed
-  ignore = dirty
-[submodule "asdf/.asdf"]
-	path = asdf/.asdf
-	url = https://github.com/asdf-vm/asdf.git
