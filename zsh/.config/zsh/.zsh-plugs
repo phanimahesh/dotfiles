@@ -2,9 +2,6 @@
 # -*- mode: zsh -*-
 # vim:ft=zsh
 
-# Allow zplug to manage itself
-zplug "zplug/zplug", hook-build:"zplug --self-manage"
-
 # When nix is installed and setup, load scripts/plugins from there
 zplug "~/.nix-profile/etc/profile.d", \
   from:local, use:"*.sh", \

@@ -11,10 +11,13 @@ REPORTTIME=5
 # Set emacs keybindings. I'm a vimmer but emacs kbs are convenient
 # in shell.
 bindkey -e
-
-export ZPLUG_HOME=$ZDOTDIR/.zplug
+export ZPLUG_HOME=$HOMEBREW_PREFIX/opt/zplug
+if [ ! -d "$ZPLUG_HOME" ]; then
+  export ZPLUG_HOME=$ZDOTDIR/.zplug
+fi
 ZPLUG_LOADFILE=$ZDOTDIR/.zsh-plugs
-source $ZDOTDIR/.zplug/init.zsh
+source $ZPLUG_HOME/init.zsh
+
 # Prefer shallow clones for zplug managed repos.
 zstyle ":zplug:tag" depth 10
 # Install plugins if there are plugins that have not been installed
