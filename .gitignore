@@ -6,3 +6,5 @@ tmux/.tmux/resurrect
 zcompdump*
 zcompcache*
 zsh/.config/zsh/.zshrc.local
+git/.config/git/private.conf
+git/.config/git/*.private.conf

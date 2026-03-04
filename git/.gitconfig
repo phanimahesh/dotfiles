@@ -46,6 +46,7 @@
   reset-file = checkout HEAD --
   log-fuller = log --pretty=fuller
   log-compact = log --pretty=\"format:%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(7)%aN%Cred%d %Creset%s\" --date=relative
+  # " temporary workaround for nvims bad syntax highlighting thinking we are in an open string due to above log-compact alias.
 
 
 [branch]
@@ -108,7 +109,7 @@
 
 [delta "interactive"]
   keep-plus-minus-markers = false
-  side-by-side = true
+  side-by-side = false
 
 [delta "decorations"]
   commit-decoration-style = blue ol
@@ -124,7 +125,7 @@
   colorMoved = default
 
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
   # Merge commits should carry summaries of included commits
   # This is a limit, there's no all option and true is 20.
   # That's just stupid, but one can argue >20 commits in merges
@@ -191,10 +192,7 @@
 # User info
 [include]
   path = ~/.config/git/personal.conf
-
-# For any repo under this dir, use this config
-[includeIf "gitdir:~/workspace/deliveroo/"]
-  path = ~/.config/git/deliveroo.conf
+  path = ~/.config/git/private.conf
 
 [github]
 	user = phanimahesh
