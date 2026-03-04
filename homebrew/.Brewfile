@@ -97,3 +97,5 @@ brew "atuin"
 brew "presenterm"
 brew "watchman"
 brew "jj"
+cask "gg" # GUI for jj
+brew "viddy" # Modern watch command
