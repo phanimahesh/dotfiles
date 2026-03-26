@@ -31,7 +31,6 @@ brew "gnutls"
 brew "grep"
 brew "guile"
 brew "htop" # Fancier and better top - process viewer
-brew "hub" # Old github client - git compatible. superseded by gh
 brew "hugo"
 brew "jq" # json query tool
 brew "kcat" # cat a kafka stream
@@ -99,3 +98,9 @@ brew "watchman"
 brew "jj"
 cask "gg" # GUI for jj
 brew "viddy" # Modern watch command
+cask "gcloud-cli" # Google Cloud CLI
+brew "googleworkspace-cli" # Google Workspace CLI
+
+tap "atlassian/homebrew-acli"
+brew "acli" # Atlassian CLI - manage Jira, Confluence, Bitbucket, etc from the command line
+uv "showboat" # Create executable demo documents that show and prove an agent's work.
