@@ -1,0 +1,176 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+MCP_PARTS_DIR="${MCP_PARTS_DIR:-$HOME/aiyolo/mcps}"
+CODEX_MCP_TOML_FILE="${CODEX_MCP_TOML_FILE:-.codex/config.toml}"
+
+print_usage() {
+  echo "Usage: with-mcps <mcp1,mcp2,...> <program> [args...]" >&2
+  echo "Example: with-mcps jira,glean claude" >&2
+  echo >&2
+  echo "MCP parts dir: $MCP_PARTS_DIR" >&2
+
+  if [[ -d "$MCP_PARTS_DIR" ]]; then
+    mapfile -t available_parts < <(
+      find "$MCP_PARTS_DIR" -maxdepth 1 -type f -name 'mcp.*.json' -print \
+        | sed -E 's#^.*/mcp\.##; s#\.json$##' \
+        | sort
+    )
+
+    if [[ ${#available_parts[@]} -gt 0 ]]; then
+      echo "Known parts:" >&2
+      printf '  %s\n' "${available_parts[@]}" >&2
+    else
+      echo "Known parts: none found in $MCP_PARTS_DIR" >&2
+    fi
+  else
+    echo "Known parts: directory not found: $MCP_PARTS_DIR" >&2
+  fi
+}
+
+list_available_parts() {
+  [[ -d "$MCP_PARTS_DIR" ]] || return 0
+
+  find "$MCP_PARTS_DIR" -maxdepth 1 -type f -name 'mcp.*.json' -print \
+    | sed -E 's#^.*/mcp\.##; s#\.json$##' \
+    | sort
+}
+
+if [[ $# -lt 2 ]]; then
+  print_usage
+  exit 1
+fi
+
+MCP_NAMES="$1"
+shift
+
+# Backup existing .mcp.json
+if [[ -f .mcp.json ]]; then
+  cp .mcp.json .mcp.parts-backup.json
+  RESTORE_BACKUP=1
+else
+  RESTORE_BACKUP=0
+fi
+
+if [[ -f "$CODEX_MCP_TOML_FILE" ]]; then
+  cp "$CODEX_MCP_TOML_FILE" "${CODEX_MCP_TOML_FILE}.parts-backup"
+  RESTORE_CODEX_BACKUP=1
+else
+  RESTORE_CODEX_BACKUP=0
+fi
+
+restore() {
+  [[ "${MCP_PARTS_DISABLE_CLEANUP:-}" == "true" ]] && return
+  if [[ "$RESTORE_BACKUP" -eq 1 ]]; then
+    mv .mcp.parts-backup.json .mcp.json
+  else
+    rm -f .mcp.json
+  fi
+  if [[ "$RESTORE_CODEX_BACKUP" -eq 1 ]]; then
+    mv "${CODEX_MCP_TOML_FILE}.parts-backup" "$CODEX_MCP_TOML_FILE"
+  else
+    rm -f "$CODEX_MCP_TOML_FILE"
+  fi
+}
+trap restore EXIT
+
+# Collect part files for requested names
+files=()
+if [[ "$MCP_NAMES" == "all" ]]; then
+  mapfile -t NAMES < <(list_available_parts)
+else
+  IFS=',' read -ra NAMES <<< "$MCP_NAMES"
+fi
+
+for name in "${NAMES[@]}"; do
+  name="${name// /}"
+  [[ -n "$name" ]] || continue
+  config_file="${MCP_PARTS_DIR}/mcp.${name}.json"
+  if [[ -f "$config_file" ]]; then
+    files+=("$config_file")
+  else
+    echo "Warning: No part file for '$name' in $MCP_PARTS_DIR" >&2
+  fi
+done
+
+# Base: all existing servers; overlay with part files.
+# Use recursive object merges so stdio env maps are preserved when a part only
+# overrides a subset of a same-named server definition.
+existing='{}'
+[[ "$RESTORE_BACKUP" -eq 1 ]] && existing=$(jq '.mcpServers // {}' .mcp.parts-backup.json)
+
+if [[ ${#files[@]} -gt 0 ]]; then
+  parts=$(jq -s 'reduce .[].mcpServers as $s ({}; . * $s)' "${files[@]}")
+else
+  parts='{}'
+fi
+
+jq -n --argjson existing "$existing" --argjson parts "$parts" \
+  '{"mcpServers": ($existing * $parts)}' > .mcp.json
+
+mkdir -p "$(dirname "$CODEX_MCP_TOML_FILE")"
+
+codex_json_tmp="$(mktemp)"
+jq '
+  {
+    "mcp_servers": (
+      .mcpServers
+      | to_entries
+      | sort_by(.key)
+      | map(
+          if ((.value.type // "") == "http" or .value.url != null) and .value.url != null then
+            {
+              key: .key,
+              value: (
+                {
+                  "url": .value.url,
+                  "bearer_token_env_var": .value.bearer_token_env_var
+                }
+                | with_entries(select(.value != null))
+              )
+            }
+          elif ((.value.type // "") == "stdio" or .value.command != null) and .value.command != null then
+            {
+              key: .key,
+              value: (
+                {
+                  "command": .value.command,
+                  "args": .value.args,
+                  "env": (
+                    (.value.env // {})
+                    | with_entries(select(.value != null))
+                  )
+                }
+                | with_entries(select(.value != null and (.key != "env" or (.value | length) > 0)))
+              )
+            }
+          else
+            empty
+          end
+        )
+      | from_entries
+    )
+  }
+' .mcp.json > "$codex_json_tmp"
+
+if [[ "$RESTORE_CODEX_BACKUP" -eq 1 ]]; then
+  codex_existing_json_tmp="$(mktemp)"
+  yq -p=toml -o=json '.' "${CODEX_MCP_TOML_FILE}.parts-backup" > "$codex_existing_json_tmp"
+  jq -s '
+    .[0] as $existing
+    | .[1] as $generated
+    | $existing + {
+        "mcp_servers": (
+          ($existing.mcp_servers // {})
+          * ($generated.mcp_servers // {})
+        )
+      }
+  ' "$codex_existing_json_tmp" "$codex_json_tmp" > "${codex_json_tmp}.merged"
+  mv "${codex_json_tmp}.merged" "$codex_json_tmp"
+  rm -f "$codex_existing_json_tmp"
+fi
+
+yq -p=json -o=toml '.' "$codex_json_tmp" > "$CODEX_MCP_TOML_FILE"
+rm -f "$codex_json_tmp"
+
+"$@"
