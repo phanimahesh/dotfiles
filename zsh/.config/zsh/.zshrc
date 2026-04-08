@@ -45,7 +45,7 @@ function source-if-exists () {
 }
 
 function eval-if-command-exists () {
-  command -v "$1" >/dev/null 2>&1 && eval "$($2)" > /dev/null 2>/dev/null || true
+  command -v "$1" >/dev/null 2>&1 && eval "$($=2)" > /dev/null 2>/dev/null || true
 }
 
 eval-if-command-exists "dircolors" "dircolors -b"
