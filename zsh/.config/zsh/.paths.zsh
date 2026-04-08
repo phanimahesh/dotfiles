@@ -58,7 +58,9 @@ setopt auto_cd
 cdpath=(
   .
   $HOME
-  $HOME/workspace/deliveroo/
+  $HOME/workspace/
+  # Include all dirs in workspace as well
+  $HOME/workspace/*(/)
 )
 cdpath=($^cdpath(N-/))
 
