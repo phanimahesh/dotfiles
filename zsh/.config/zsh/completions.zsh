@@ -47,3 +47,5 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 zstyle '*' single-ignored show
 
 source <(COMPLETE=zsh jj)
+
+source-if-exists "$ZDOTDIR"/completions/_tmux_pane_words.zsh
